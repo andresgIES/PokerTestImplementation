@@ -5,6 +5,8 @@ import static constants.Constants.SIZE_HAND;
 
 import java.util.List;
 
+import enums.TipoMano;
+
 public class Poker {
 	
 	private static final int PAR = 2;
@@ -14,7 +16,7 @@ public class Poker {
 			throw new ExceptionValidationPoker(ExceptionValidationPoker.HAND_INVALID);
 		}
 	}
-	
+		
 	private String getValorCartaPar(List<Carta> cartas) {
 		
 		String valorCartaMano = "";
@@ -38,21 +40,22 @@ public class Poker {
 		return valorCartaMano;
 	}
 	
-	public Mano validatePar(Mano manoJugador1, Mano manoJugador2) throws ExceptionValidationPoker{
+	public Ganador validatePar(Mano manoJugador1, Mano manoJugador2) throws ExceptionValidationPoker{
 		validateMano(manoJugador1);
 		validateMano(manoJugador2);
+		
+		if(!manoJugador1.getTipoDeMano().equals(manoJugador2.getTipoDeMano())) {
+			// TODO crear metodo para validar la jerarquia de los tipos de mano
+		}
 
 		final String valorParJugador1 = getValorCartaPar(manoJugador1.getCartas());
 		final String valorParJugador2 = getValorCartaPar(manoJugador2.getCartas());
 		
-		System.out.println("valorParJugador1: " + valorParJugador1);
-		System.out.println("valorParJugador2: " + valorParJugador2);
-
 		if(valorParJugador1.isEmpty()) {
-			return manoJugador2;
+			return new Ganador(valorParJugador2, TipoMano.PAR);
 		}
 		if(valorParJugador2.isEmpty()) {
-			return manoJugador1;
+			return new Ganador(valorParJugador1, TipoMano.PAR);
 		}
 		if(valorParJugador1.equals(valorParJugador2)) {
 			// TODO implementar desempate de acuerdo a las demas cartas

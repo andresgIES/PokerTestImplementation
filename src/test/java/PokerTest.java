@@ -1,9 +1,11 @@
 import org.junit.jupiter.api.Test;
 
 import domain.Carta;
+import domain.Ganador;
 import domain.Mano;
 import domain.Poker;
 import enums.Palo;
+import enums.TipoMano;
 import exceptions.ExceptionValidationPoker;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -49,9 +51,7 @@ class PokerTest {
     	final Carta cK = new Carta(Palo.C, VALOR_K); 
     	final Carta dK = new Carta(Palo.D, VALOR_K); 
     	
-    	final Mano manoJugadorBlanco = new Mano();
-    	final List<Carta> cartasJugadorBlanco = Arrays.asList(h2, d3, s5, cK, dK);
-    	manoJugadorBlanco.setCartas(cartasJugadorBlanco);
+    	final Mano manoJugadorBlanco = new Mano(Arrays.asList(h2, d3, s5, cK, dK), TipoMano.PAR);
     	
     	final Carta c2 = new Carta(Palo.C, VALOR_2);
     	final Carta h3 = new Carta(Palo.H, VALOR_3); 
@@ -59,13 +59,11 @@ class PokerTest {
     	final Carta c8 = new Carta(Palo.C, VALOR_8); 
     	final Carta hA = new Carta(Palo.H, VALOR_A); 
     	
-    	final Mano manoJugadorNegro = new Mano();
-    	final List<Carta> cartasJugadorNegro = Arrays.asList(c2, h3, s4, c8, hA);
-    	manoJugadorNegro.setCartas(cartasJugadorNegro);
+    	final Mano manoJugadorNegro = new Mano(Arrays.asList(c2, h3, s4, c8, hA), TipoMano.PAR);
 
-    	final Mano manoGanadoraActual = juego.validatePar(manoJugadorBlanco, manoJugadorNegro);
+    	final Ganador cartaGanadoraActual = juego.validatePar(manoJugadorBlanco, manoJugadorNegro);
     	
-    	assertEquals(manoJugadorBlanco, manoGanadoraActual);
+    	assertEquals(VALOR_K, cartaGanadoraActual.getCartaGanadora());
     	
     }
 
@@ -81,9 +79,7 @@ class PokerTest {
     	final Carta c8 = new Carta(Palo.C, VALOR_8); 
     	final Carta dK = new Carta(Palo.D, VALOR_K); 
     	
-    	final Mano manoJugadorBlanco = new Mano();
-    	final List<Carta> cartasJugadorBlanco = Arrays.asList(h2, d3, s5, c8, dK);
-    	manoJugadorBlanco.setCartas(cartasJugadorBlanco);
+    	final Mano manoJugadorBlanco = new Mano(Arrays.asList(h2, d3, s5, c8, dK), TipoMano.PAR);
     	
     	final Carta c2 = new Carta(Palo.C, VALOR_2);
     	final Carta h3 = new Carta(Palo.H, VALOR_3); 
@@ -91,13 +87,11 @@ class PokerTest {
     	final Carta cA = new Carta(Palo.C, VALOR_A); 
     	final Carta hA = new Carta(Palo.H, VALOR_A); 
     	
-    	final Mano manoJugadorNegro = new Mano();
-    	final List<Carta> cartasJugadorNegro = Arrays.asList(c2, h3, s4, cA, hA);
-    	manoJugadorNegro.setCartas(cartasJugadorNegro);
+    	final Mano manoJugadorNegro = new Mano(Arrays.asList(c2, h3, s4, cA, hA), TipoMano.PAR);
 
-    	final Mano manoGanadoraActual = juego.validatePar(manoJugadorBlanco, manoJugadorNegro);
+    	final Ganador cartaGanadoraActual = juego.validatePar(manoJugadorBlanco, manoJugadorNegro);
     	
-    	assertEquals(manoJugadorNegro, manoGanadoraActual);
+    	assertEquals(VALOR_A, cartaGanadoraActual.getCartaGanadora());
 
     }
     
@@ -112,9 +106,7 @@ class PokerTest {
     	final Carta s5 = new Carta(Palo.S, VALOR_5); 
     	final Carta c8 = new Carta(Palo.C, VALOR_8); 
     	
-    	final Mano manoJugadorBlanco = new Mano();
-    	final List<Carta> cartasJugadorBlanco = Arrays.asList(h2, d3, s5, c8);
-    	manoJugadorBlanco.setCartas(cartasJugadorBlanco);
+    	final Mano manoJugadorBlanco = new Mano(Arrays.asList(h2, d3, s5, c8), TipoMano.PAR);
     	
     	final Carta c2 = new Carta(Palo.C, VALOR_2);
     	final Carta h3 = new Carta(Palo.H, VALOR_3); 
@@ -122,9 +114,7 @@ class PokerTest {
     	final Carta cA = new Carta(Palo.C, VALOR_A); 
     	final Carta hA = new Carta(Palo.H, VALOR_A); 
     	
-    	final Mano manoJugadorNegro = new Mano();
-    	final List<Carta> cartasJugadorNegro = Arrays.asList(c2, h3, s4, cA, hA);
-    	manoJugadorNegro.setCartas(cartasJugadorNegro);
+    	final Mano manoJugadorNegro = new Mano(Arrays.asList(c2, h3, s4, cA, hA), TipoMano.PAR);
     	
         Exception exception = assertThrows(ExceptionValidationPoker.class, () -> {
         	juego.validatePar(manoJugadorBlanco, manoJugadorNegro);
