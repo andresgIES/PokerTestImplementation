@@ -1,9 +1,28 @@
 import org.junit.jupiter.api.Test;
 
+import domain.Carta;
+import domain.Mano;
+import domain.Poker;
+import enums.Palo;
+import exceptions.ExceptionValidationPoker;
+
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.Arrays;
+import java.util.List;
+
 import org.junit.jupiter.api.DisplayName;
 
 class PokerTest {
+	
+	private static final String VALOR_2 = "2";
+	private static final String VALOR_3 = "3";
+	private static final String VALOR_5 = "5";
+	private static final String VALOR_K = "K";
+	private static final String VALOR_4 = "4";
+	private static final String VALOR_8 = "8";
+	private static final String VALOR_A = "A";
+
     @DisplayName("Blanco: 2H 3D 5S 9C KD  Negro: 2C 3H 4S 8C AH Negro gana. - con la carta alta: As ")
     @Test
     void testCartaAlta() {
@@ -20,14 +39,101 @@ class PokerTest {
 
     @DisplayName("Blanco: 2H 3D 5S KC KD  Negro: 2C 3H 4S 8C AH Blanco gana. - con par: Rey ")
     @Test
-    void testPar() {
-        fail("no implementado");
+    void testPar() throws ExceptionValidationPoker {
+    	
+    	final Poker juego = new Poker();
+    	
+    	final Carta h2 = new Carta(Palo.H, VALOR_2);
+    	final Carta d3 = new Carta(Palo.D, VALOR_3); 
+    	final Carta s5 = new Carta(Palo.S, VALOR_5); 
+    	final Carta cK = new Carta(Palo.C, VALOR_K); 
+    	final Carta dK = new Carta(Palo.D, VALOR_K); 
+    	
+    	final Mano manoJugadorBlanco = new Mano();
+    	final List<Carta> cartasJugadorBlanco = Arrays.asList(h2, d3, s5, cK, dK);
+    	manoJugadorBlanco.setCartas(cartasJugadorBlanco);
+    	
+    	final Carta c2 = new Carta(Palo.C, VALOR_2);
+    	final Carta h3 = new Carta(Palo.H, VALOR_3); 
+    	final Carta s4 = new Carta(Palo.S, VALOR_4); 
+    	final Carta c8 = new Carta(Palo.C, VALOR_8); 
+    	final Carta hA = new Carta(Palo.H, VALOR_A); 
+    	
+    	final Mano manoJugadorNegro = new Mano();
+    	final List<Carta> cartasJugadorNegro = Arrays.asList(c2, h3, s4, c8, hA);
+    	manoJugadorNegro.setCartas(cartasJugadorNegro);
+
+    	final Mano manoGanadoraActual = juego.validatePar(manoJugadorBlanco, manoJugadorNegro);
+    	
+    	assertEquals(manoJugadorBlanco, manoGanadoraActual);
+    	
     }
 
     @DisplayName("Blanco: 2H 3D 5S 8C KD  Negro: 2C 3H 4S AC AH Negro gana. - con par: As ")
     @Test
-    void testPar2() {
-        fail("no implementado");
+    void testPar2() throws ExceptionValidationPoker {
+    	
+    	final Poker juego = new Poker();
+    	
+    	final Carta h2 = new Carta(Palo.H, VALOR_2);
+    	final Carta d3 = new Carta(Palo.D, VALOR_3); 
+    	final Carta s5 = new Carta(Palo.S, VALOR_5); 
+    	final Carta c8 = new Carta(Palo.C, VALOR_8); 
+    	final Carta dK = new Carta(Palo.D, VALOR_K); 
+    	
+    	final Mano manoJugadorBlanco = new Mano();
+    	final List<Carta> cartasJugadorBlanco = Arrays.asList(h2, d3, s5, c8, dK);
+    	manoJugadorBlanco.setCartas(cartasJugadorBlanco);
+    	
+    	final Carta c2 = new Carta(Palo.C, VALOR_2);
+    	final Carta h3 = new Carta(Palo.H, VALOR_3); 
+    	final Carta s4 = new Carta(Palo.S, VALOR_4); 
+    	final Carta cA = new Carta(Palo.C, VALOR_A); 
+    	final Carta hA = new Carta(Palo.H, VALOR_A); 
+    	
+    	final Mano manoJugadorNegro = new Mano();
+    	final List<Carta> cartasJugadorNegro = Arrays.asList(c2, h3, s4, cA, hA);
+    	manoJugadorNegro.setCartas(cartasJugadorNegro);
+
+    	final Mano manoGanadoraActual = juego.validatePar(manoJugadorBlanco, manoJugadorNegro);
+    	
+    	assertEquals(manoJugadorNegro, manoGanadoraActual);
+
+    }
+    
+    @DisplayName("Blanco: 2H 3D 5S 8C  Negro: 2C 3H 4S AC AH Se lanza Exception de error en la mano")
+    @Test
+    void testPar3() throws ExceptionValidationPoker {
+    	
+    	final Poker juego = new Poker();
+    	
+    	final Carta h2 = new Carta(Palo.H, VALOR_2);
+    	final Carta d3 = new Carta(Palo.D, VALOR_3); 
+    	final Carta s5 = new Carta(Palo.S, VALOR_5); 
+    	final Carta c8 = new Carta(Palo.C, VALOR_8); 
+    	
+    	final Mano manoJugadorBlanco = new Mano();
+    	final List<Carta> cartasJugadorBlanco = Arrays.asList(h2, d3, s5, c8);
+    	manoJugadorBlanco.setCartas(cartasJugadorBlanco);
+    	
+    	final Carta c2 = new Carta(Palo.C, VALOR_2);
+    	final Carta h3 = new Carta(Palo.H, VALOR_3); 
+    	final Carta s4 = new Carta(Palo.S, VALOR_4); 
+    	final Carta cA = new Carta(Palo.C, VALOR_A); 
+    	final Carta hA = new Carta(Palo.H, VALOR_A); 
+    	
+    	final Mano manoJugadorNegro = new Mano();
+    	final List<Carta> cartasJugadorNegro = Arrays.asList(c2, h3, s4, cA, hA);
+    	manoJugadorNegro.setCartas(cartasJugadorNegro);
+    	
+        Exception exception = assertThrows(ExceptionValidationPoker.class, () -> {
+        	juego.validatePar(manoJugadorBlanco, manoJugadorNegro);
+        });
+
+        String expectedMessage = ExceptionValidationPoker.HAND_INVALID;
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
     }
 
     //dos pares
