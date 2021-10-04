@@ -2,6 +2,6 @@ package enums;
 
 public enum TipoMano {
 	
-	PAR
+	CARTA_ALTA, PAR
 
 }

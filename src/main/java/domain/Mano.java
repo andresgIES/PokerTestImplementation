@@ -37,7 +37,7 @@ public class Mano {
 
 	@Override
 	public String toString() {
-		return "Baraja [cartas=" + cartas + "]";
+		return "Mano [cartas=" + cartas + ", tipoDeMano=" + tipoDeMano + "]";
 	}
 	
 }

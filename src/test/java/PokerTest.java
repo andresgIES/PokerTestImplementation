@@ -1,28 +1,26 @@
 import org.junit.jupiter.api.Test;
 
+import static constants.Constants.CARTAS;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import domain.Carta;
 import domain.Ganador;
 import domain.Mano;
 import domain.Poker;
-import enums.Palo;
 import enums.TipoMano;
 import exceptions.ExceptionValidationPoker;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Arrays;
-import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
 
 class PokerTest {
 	
-	private static final String VALOR_2 = "2";
-	private static final String VALOR_3 = "3";
-	private static final String VALOR_5 = "5";
 	private static final String VALOR_K = "K";
-	private static final String VALOR_4 = "4";
-	private static final String VALOR_8 = "8";
 	private static final String VALOR_A = "A";
 
     @DisplayName("Blanco: 2H 3D 5S 9C KD  Negro: 2C 3H 4S 8C AH Negro gana. - con la carta alta: As ")
@@ -43,24 +41,26 @@ class PokerTest {
     @Test
     void testPar() throws ExceptionValidationPoker {
     	
+    	// given
     	final Poker juego = new Poker();
     	
-    	final Carta h2 = new Carta(Palo.H, VALOR_2);
-    	final Carta d3 = new Carta(Palo.D, VALOR_3); 
-    	final Carta s5 = new Carta(Palo.S, VALOR_5); 
-    	final Carta cK = new Carta(Palo.C, VALOR_K); 
-    	final Carta dK = new Carta(Palo.D, VALOR_K); 
+    	final Carta h2 = CARTAS.get("2H");
+    	final Carta d3 = CARTAS.get("3D"); 
+    	final Carta s5 = CARTAS.get("5S"); 
+    	final Carta cK = CARTAS.get("KC"); 
+    	final Carta dK = CARTAS.get("KD"); 
     	
     	final Mano manoJugadorBlanco = new Mano(Arrays.asList(h2, d3, s5, cK, dK), TipoMano.PAR);
     	
-    	final Carta c2 = new Carta(Palo.C, VALOR_2);
-    	final Carta h3 = new Carta(Palo.H, VALOR_3); 
-    	final Carta s4 = new Carta(Palo.S, VALOR_4); 
-    	final Carta c8 = new Carta(Palo.C, VALOR_8); 
-    	final Carta hA = new Carta(Palo.H, VALOR_A); 
+    	final Carta c2 = CARTAS.get("2C");
+    	final Carta h3 = CARTAS.get("3H");
+    	final Carta s4 = CARTAS.get("4S"); 
+    	final Carta c8 = CARTAS.get("8C"); 
+    	final Carta hA = CARTAS.get("AH"); 
     	
-    	final Mano manoJugadorNegro = new Mano(Arrays.asList(c2, h3, s4, c8, hA), TipoMano.PAR);
+    	final Mano manoJugadorNegro = new Mano(Arrays.asList(c2, h3, s4, c8, hA), TipoMano.CARTA_ALTA);
 
+    	// when
     	final Ganador cartaGanadoraActual = juego.validatePar(manoJugadorBlanco, manoJugadorNegro);
     	
     	assertEquals(VALOR_K, cartaGanadoraActual.getCartaGanadora());
@@ -71,26 +71,30 @@ class PokerTest {
     @Test
     void testPar2() throws ExceptionValidationPoker {
     	
+    	// given
     	final Poker juego = new Poker();
     	
-    	final Carta h2 = new Carta(Palo.H, VALOR_2);
-    	final Carta d3 = new Carta(Palo.D, VALOR_3); 
-    	final Carta s5 = new Carta(Palo.S, VALOR_5); 
-    	final Carta c8 = new Carta(Palo.C, VALOR_8); 
-    	final Carta dK = new Carta(Palo.D, VALOR_K); 
+    	final Carta h2 = CARTAS.get("2H");
+    	final Carta d3 = CARTAS.get("3D"); 
+    	final Carta s5 = CARTAS.get("5S"); 
+    	final Carta c8 = CARTAS.get("8S"); 
+    	final Carta dK = CARTAS.get("KD"); 
     	
-    	final Mano manoJugadorBlanco = new Mano(Arrays.asList(h2, d3, s5, c8, dK), TipoMano.PAR);
+    	final Mano manoJugadorBlanco = new Mano(Arrays.asList(h2, d3, s5, c8, dK), TipoMano.CARTA_ALTA);
     	
-    	final Carta c2 = new Carta(Palo.C, VALOR_2);
-    	final Carta h3 = new Carta(Palo.H, VALOR_3); 
-    	final Carta s4 = new Carta(Palo.S, VALOR_4); 
-    	final Carta cA = new Carta(Palo.C, VALOR_A); 
-    	final Carta hA = new Carta(Palo.H, VALOR_A); 
+    	final Carta c2 = CARTAS.get("2C");
+    	final Carta h3 = CARTAS.get("3H"); 
+    	final Carta s4 = CARTAS.get("4S"); 
+    	final Carta cA = CARTAS.get("AC"); 
+    	final Carta hA = CARTAS.get("AH"); 
     	
+    	// when
     	final Mano manoJugadorNegro = new Mano(Arrays.asList(c2, h3, s4, cA, hA), TipoMano.PAR);
 
+    	// when
     	final Ganador cartaGanadoraActual = juego.validatePar(manoJugadorBlanco, manoJugadorNegro);
     	
+    	// then
     	assertEquals(VALOR_A, cartaGanadoraActual.getCartaGanadora());
 
     }
@@ -99,27 +103,30 @@ class PokerTest {
     @Test
     void testPar3() throws ExceptionValidationPoker {
     	
+    	// given
     	final Poker juego = new Poker();
     	
-    	final Carta h2 = new Carta(Palo.H, VALOR_2);
-    	final Carta d3 = new Carta(Palo.D, VALOR_3); 
-    	final Carta s5 = new Carta(Palo.S, VALOR_5); 
-    	final Carta c8 = new Carta(Palo.C, VALOR_8); 
+    	final Carta h2 = CARTAS.get("2H");
+    	final Carta d3 = CARTAS.get("3D"); 
+    	final Carta s5 = CARTAS.get("5S"); 
+    	final Carta c8 = CARTAS.get("8C"); 
     	
-    	final Mano manoJugadorBlanco = new Mano(Arrays.asList(h2, d3, s5, c8), TipoMano.PAR);
+    	final Mano manoJugadorBlanco = new Mano(Arrays.asList(h2, d3, s5, c8), TipoMano.CARTA_ALTA);
     	
-    	final Carta c2 = new Carta(Palo.C, VALOR_2);
-    	final Carta h3 = new Carta(Palo.H, VALOR_3); 
-    	final Carta s4 = new Carta(Palo.S, VALOR_4); 
-    	final Carta cA = new Carta(Palo.C, VALOR_A); 
-    	final Carta hA = new Carta(Palo.H, VALOR_A); 
+    	final Carta c2 = CARTAS.get("2C");
+    	final Carta h3 = CARTAS.get("3H"); 
+    	final Carta s4 = CARTAS.get("4S"); 
+    	final Carta cA = CARTAS.get("AC"); 
+    	final Carta hA = CARTAS.get("AH"); 
     	
     	final Mano manoJugadorNegro = new Mano(Arrays.asList(c2, h3, s4, cA, hA), TipoMano.PAR);
     	
+    	// when
         Exception exception = assertThrows(ExceptionValidationPoker.class, () -> {
         	juego.validatePar(manoJugadorBlanco, manoJugadorNegro);
         });
 
+        // then
         String expectedMessage = ExceptionValidationPoker.HAND_INVALID;
         String actualMessage = exception.getMessage();
 
@@ -127,8 +134,7 @@ class PokerTest {
     }
 
     //dos pares
-
-
+    
     @DisplayName("Blanco: 2H 3D 3S KC KD  Negro: 2C 3H 4S 8C AH Blanco gana. - con dos pares: Rey y Tres")
     @Test
     void testDosPares() {
