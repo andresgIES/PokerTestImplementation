@@ -34,6 +34,10 @@ public class Mano {
 	public void setCartas(List<Carta> cartas) {
 		this.cartas = cartas;
 	}
+	
+	public int getValorMano() {
+		return this.getTipoDeMano().getValor();
+	}
 
 	@Override
 	public String toString() {

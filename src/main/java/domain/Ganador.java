@@ -6,7 +6,7 @@ public class Ganador {
 	
 	private String cartaGanadora;
 	
-	private TipoMano tipoDeMano;
+	private TipoMano tipoManoGanadora;
 	
 	public Ganador() {
 		super();
@@ -15,7 +15,7 @@ public class Ganador {
 	public Ganador(String cartaGanadora, TipoMano tipoDeMano) {
 		super();
 		this.cartaGanadora = cartaGanadora;
-		this.tipoDeMano = tipoDeMano;
+		this.tipoManoGanadora = tipoDeMano;
 	}
 
 	public String getCartaGanadora() {
@@ -27,11 +27,11 @@ public class Ganador {
 	}
 
 	public TipoMano getTipoDeMano() {
-		return tipoDeMano;
+		return tipoManoGanadora;
 	}
 
-	public void setTipoDeMano(TipoMano tipoDeMano) {
-		this.tipoDeMano = tipoDeMano;
+	public void setTipoDeMano(TipoMano tipoManoGanadora) {
+		this.tipoManoGanadora = tipoManoGanadora;
 	}
 	
 	

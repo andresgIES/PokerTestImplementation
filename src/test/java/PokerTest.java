@@ -25,14 +25,95 @@ class PokerTest {
 
     @DisplayName("Blanco: 2H 3D 5S 9C KD  Negro: 2C 3H 4S 8C AH Negro gana. - con la carta alta: As ")
     @Test
-    void testCartaAlta() {
-        fail("no implementado");
+    void testCartaAlta() throws ExceptionValidationPoker {
+    	
+    	// given
+    	final Poker juego = new Poker();
+    	
+    	final Carta h2 = CARTAS.get("2H");
+    	final Carta d3 = CARTAS.get("3D"); 
+    	final Carta s5 = CARTAS.get("5S"); 
+    	final Carta c9 = CARTAS.get("9C"); 
+    	final Carta dK = CARTAS.get("KD"); 
+    	
+    	final Mano manoJugadorBlanco = new Mano(Arrays.asList(h2, d3, s5, c9, dK), TipoMano.CARTA_ALTA);
+    	
+    	final Carta c2 = CARTAS.get("2C");
+    	final Carta h3 = CARTAS.get("3H"); 
+    	final Carta s4 = CARTAS.get("4S"); 
+    	final Carta c8 = CARTAS.get("8C"); 
+    	final Carta hA = CARTAS.get("AH"); 
+    	
+    	final Mano manoJugadorNegro = new Mano(Arrays.asList(c2, h3, s4, c8, hA), TipoMano.CARTA_ALTA);
+
+    	// when
+    	final Ganador cartaGanadoraActual = juego.getValidationbyManoMayor(manoJugadorBlanco, manoJugadorNegro);
+    	
+    	// then
+    	assertEquals(VALOR_A, cartaGanadoraActual.getCartaGanadora());
     }
 
+    // FIXME deberia ser carta alta contra par
     @DisplayName("Blanco: 2H 3D 5S 9C KD  Negro: 2C 3H 4S 8C 2C Blanco gana. - con la carta alta: Rey ")
     @Test
-    void testCartaAlta2() {
-        fail("no implementado");
+    void testCartaAlta2() throws ExceptionValidationPoker {    	
+    	
+    	// given
+    	final Poker juego = new Poker();
+    	
+    	final Carta h2 = CARTAS.get("2H");
+    	final Carta d3 = CARTAS.get("3D"); 
+    	final Carta s5 = CARTAS.get("5S"); 
+    	final Carta c9 = CARTAS.get("9C"); 
+    	final Carta dK = CARTAS.get("KD"); 
+    	final Mano manoJugadorBlanco = new Mano(Arrays.asList(h2, d3, s5, c9, dK), TipoMano.CARTA_ALTA);
+    	
+    	final Carta c2 = CARTAS.get("2C");
+    	final Carta h3 = CARTAS.get("3H"); 
+    	final Carta s4 = CARTAS.get("4S"); 
+    	final Carta c8 = CARTAS.get("8C"); 
+    	
+    	final Mano manoJugadorNegro = new Mano(Arrays.asList(c2, h3, s4, c8, c2), TipoMano.CARTA_ALTA);
+
+    	// when
+    	final Ganador cartaGanadoraActual = juego.getValidationbyManoMayor(manoJugadorBlanco, manoJugadorNegro);
+    	
+    	// then
+    	assertEquals(VALOR_K, cartaGanadoraActual.getCartaGanadora());
+    }
+    
+    @DisplayName("Blanco: 2H 3D 5S 8C  Negro: 2C 3H 4S AC AH Se lanza Exception de error en la mano")
+    @Test
+    void testCartaAlta3() {
+    	
+    	// given
+    	final Poker juego = new Poker();
+    	
+    	final Carta h2 = CARTAS.get("2H");
+    	final Carta d3 = CARTAS.get("3D"); 
+    	final Carta s5 = CARTAS.get("5S"); 
+    	final Carta c8 = CARTAS.get("8C"); 
+    	
+    	final Mano manoJugadorBlanco = new Mano(Arrays.asList(h2, d3, s5, c8), TipoMano.CARTA_ALTA);
+    	
+    	final Carta c2 = CARTAS.get("2C");
+    	final Carta h3 = CARTAS.get("3H"); 
+    	final Carta s4 = CARTAS.get("4S"); 
+    	final Carta cA = CARTAS.get("AC"); 
+    	final Carta hA = CARTAS.get("AH"); 
+    	
+    	final Mano manoJugadorNegro = new Mano(Arrays.asList(c2, h3, s4, cA, hA), null);
+    	
+    	// when
+        Exception exception = assertThrows(ExceptionValidationPoker.class, () -> {
+        	juego.getValidationbyManoMayor(manoJugadorBlanco, manoJugadorNegro);
+        });
+
+        // then
+        String expectedMessage = ExceptionValidationPoker.HAND_INVALID;
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
     }
 
     //par
@@ -61,8 +142,9 @@ class PokerTest {
     	final Mano manoJugadorNegro = new Mano(Arrays.asList(c2, h3, s4, c8, hA), TipoMano.CARTA_ALTA);
 
     	// when
-    	final Ganador cartaGanadoraActual = juego.validatePar(manoJugadorBlanco, manoJugadorNegro);
+    	final Ganador cartaGanadoraActual = juego.getValidationbyManoMayor(manoJugadorBlanco, manoJugadorNegro);
     	
+    	// then
     	assertEquals(VALOR_K, cartaGanadoraActual.getCartaGanadora());
     	
     }
@@ -88,11 +170,10 @@ class PokerTest {
     	final Carta cA = CARTAS.get("AC"); 
     	final Carta hA = CARTAS.get("AH"); 
     	
-    	// when
     	final Mano manoJugadorNegro = new Mano(Arrays.asList(c2, h3, s4, cA, hA), TipoMano.PAR);
 
     	// when
-    	final Ganador cartaGanadoraActual = juego.validatePar(manoJugadorBlanco, manoJugadorNegro);
+    	final Ganador cartaGanadoraActual = juego.getValidationbyManoMayor(manoJugadorBlanco, manoJugadorNegro);
     	
     	// then
     	assertEquals(VALOR_A, cartaGanadoraActual.getCartaGanadora());
@@ -101,7 +182,7 @@ class PokerTest {
     
     @DisplayName("Blanco: 2H 3D 5S 8C  Negro: 2C 3H 4S AC AH Se lanza Exception de error en la mano")
     @Test
-    void testPar3() throws ExceptionValidationPoker {
+    void testPar3() {
     	
     	// given
     	final Poker juego = new Poker();
@@ -123,7 +204,7 @@ class PokerTest {
     	
     	// when
         Exception exception = assertThrows(ExceptionValidationPoker.class, () -> {
-        	juego.validatePar(manoJugadorBlanco, manoJugadorNegro);
+        	juego.getValidationbyManoMayor(manoJugadorBlanco, manoJugadorNegro);
         });
 
         // then
