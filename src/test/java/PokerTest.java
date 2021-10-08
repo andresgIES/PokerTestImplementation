@@ -3,7 +3,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,22 +28,10 @@ class PokerTest {
     	
     	// given
     	final Poker juego = new Poker();
-    	
-    	final Carta h2 = CARTAS.get("2H");
-    	final Carta d3 = CARTAS.get("3D"); 
-    	final Carta s5 = CARTAS.get("5S"); 
-    	final Carta c9 = CARTAS.get("9C"); 
-    	final Carta dK = CARTAS.get("KD"); 
-    	
-    	final Mano manoJugadorBlanco = new Mano(Arrays.asList(h2, d3, s5, c9, dK), TipoMano.CARTA_ALTA);
-    	
-    	final Carta c2 = CARTAS.get("2C");
-    	final Carta h3 = CARTAS.get("3H"); 
-    	final Carta s4 = CARTAS.get("4S"); 
-    	final Carta c8 = CARTAS.get("8C"); 
-    	final Carta hA = CARTAS.get("AH"); 
-    	
-    	final Mano manoJugadorNegro = new Mano(Arrays.asList(c2, h3, s4, c8, hA), TipoMano.CARTA_ALTA);
+    	    	
+    	final Mano manoJugadorBlanco = new Mano(getCartasFromString("2H 3D 5S 9C KD"), TipoMano.CARTA_ALTA);
+    	    	
+    	final Mano manoJugadorNegro = new Mano(getCartasFromString("2C 3H 4S 8C AH"), TipoMano.CARTA_ALTA);
 
     	// when
     	final Ganador cartaGanadoraActual = juego.getValidationbyManoMayor(manoJugadorBlanco, manoJugadorNegro);
@@ -59,19 +48,9 @@ class PokerTest {
     	// given
     	final Poker juego = new Poker();
     	
-    	final Carta h2 = CARTAS.get("2H");
-    	final Carta d3 = CARTAS.get("3D"); 
-    	final Carta s5 = CARTAS.get("5S"); 
-    	final Carta c9 = CARTAS.get("9C"); 
-    	final Carta dK = CARTAS.get("KD"); 
-    	final Mano manoJugadorBlanco = new Mano(Arrays.asList(h2, d3, s5, c9, dK), TipoMano.CARTA_ALTA);
-    	
-    	final Carta c2 = CARTAS.get("2C");
-    	final Carta h3 = CARTAS.get("3H"); 
-    	final Carta s4 = CARTAS.get("4S"); 
-    	final Carta c8 = CARTAS.get("8C"); 
-    	
-    	final Mano manoJugadorNegro = new Mano(Arrays.asList(c2, h3, s4, c8, c2), TipoMano.CARTA_ALTA);
+    	final Mano manoJugadorBlanco = new Mano(getCartasFromString("2H 3D 5S 9C KD "), TipoMano.CARTA_ALTA);
+    	    	
+    	final Mano manoJugadorNegro = new Mano(getCartasFromString("2C 3H 4S 8C 2C"), TipoMano.CARTA_ALTA);
 
     	// when
     	final Ganador cartaGanadoraActual = juego.getValidationbyManoMayor(manoJugadorBlanco, manoJugadorNegro);
@@ -86,21 +65,10 @@ class PokerTest {
     	
     	// given
     	final Poker juego = new Poker();
-    	
-    	final Carta h2 = CARTAS.get("2H");
-    	final Carta d3 = CARTAS.get("3D"); 
-    	final Carta s5 = CARTAS.get("5S"); 
-    	final Carta c8 = CARTAS.get("8C"); 
-    	
-    	final Mano manoJugadorBlanco = new Mano(Arrays.asList(h2, d3, s5, c8), TipoMano.CARTA_ALTA);
-    	
-    	final Carta c2 = CARTAS.get("2C");
-    	final Carta h3 = CARTAS.get("3H"); 
-    	final Carta s4 = CARTAS.get("4S"); 
-    	final Carta cA = CARTAS.get("AC"); 
-    	final Carta hA = CARTAS.get("AH"); 
-    	
-    	final Mano manoJugadorNegro = new Mano(Arrays.asList(c2, h3, s4, cA, hA), null);
+    	    	
+    	final Mano manoJugadorBlanco = new Mano(getCartasFromString("2H 3D 5S 8C"), TipoMano.CARTA_ALTA);
+    	    	
+    	final Mano manoJugadorNegro = new Mano(getCartasFromString("2C 3H 4S AC AH"), null);
     	
     	// when
         Exception exception = assertThrows(ExceptionValidationPoker.class, () -> {
@@ -122,22 +90,10 @@ class PokerTest {
     	
     	// given
     	final Poker juego = new Poker();
-    	
-    	final Carta h2 = CARTAS.get("2H");
-    	final Carta d3 = CARTAS.get("3D"); 
-    	final Carta s5 = CARTAS.get("5S"); 
-    	final Carta cK = CARTAS.get("KC"); 
-    	final Carta dK = CARTAS.get("KD"); 
-    	
-    	final Mano manoJugadorBlanco = new Mano(Arrays.asList(h2, d3, s5, cK, dK), TipoMano.PAR);
-    	
-    	final Carta c2 = CARTAS.get("2C");
-    	final Carta h3 = CARTAS.get("3H");
-    	final Carta s4 = CARTAS.get("4S"); 
-    	final Carta c8 = CARTAS.get("8C"); 
-    	final Carta hA = CARTAS.get("AH"); 
-    	
-    	final Mano manoJugadorNegro = new Mano(Arrays.asList(c2, h3, s4, c8, hA), TipoMano.CARTA_ALTA);
+    	    	
+    	final Mano manoJugadorBlanco = new Mano(getCartasFromString("2H 3D 5S KC KD"), TipoMano.PAR);
+    	    	
+    	final Mano manoJugadorNegro = new Mano(getCartasFromString("2C 3H 4S 8C AH"), TipoMano.CARTA_ALTA);
 
     	// when
     	final Ganador cartaGanadoraActual = juego.getValidationbyManoMayor(manoJugadorBlanco, manoJugadorNegro);
@@ -153,22 +109,10 @@ class PokerTest {
     	
     	// given
     	final Poker juego = new Poker();
-    	
-    	final Carta h2 = CARTAS.get("2H");
-    	final Carta d3 = CARTAS.get("3D"); 
-    	final Carta s5 = CARTAS.get("5S"); 
-    	final Carta c8 = CARTAS.get("8S"); 
-    	final Carta dK = CARTAS.get("KD"); 
-    	
-    	final Mano manoJugadorBlanco = new Mano(Arrays.asList(h2, d3, s5, c8, dK), TipoMano.CARTA_ALTA);
-    	
-    	final Carta c2 = CARTAS.get("2C");
-    	final Carta h3 = CARTAS.get("3H"); 
-    	final Carta s4 = CARTAS.get("4S"); 
-    	final Carta cA = CARTAS.get("AC"); 
-    	final Carta hA = CARTAS.get("AH"); 
-    	
-    	final Mano manoJugadorNegro = new Mano(Arrays.asList(c2, h3, s4, cA, hA), TipoMano.PAR);
+    	    	
+    	final Mano manoJugadorBlanco = new Mano(getCartasFromString("2H 3D 5S 8C KD"), TipoMano.CARTA_ALTA);
+    	    	
+    	final Mano manoJugadorNegro = new Mano(getCartasFromString("2C 3H 4S AC AH"), TipoMano.PAR);
 
     	// when
     	final Ganador cartaGanadoraActual = juego.getValidationbyManoMayor(manoJugadorBlanco, manoJugadorNegro);
@@ -184,21 +128,10 @@ class PokerTest {
     	
     	// given
     	final Poker juego = new Poker();
-    	
-    	final Carta h2 = CARTAS.get("2H");
-    	final Carta d3 = CARTAS.get("3D"); 
-    	final Carta s5 = CARTAS.get("5S"); 
-    	final Carta c8 = CARTAS.get("8C"); 
-    	
-    	final Mano manoJugadorBlanco = new Mano(Arrays.asList(h2, d3, s5, c8), TipoMano.CARTA_ALTA);
-    	
-    	final Carta c2 = CARTAS.get("2C");
-    	final Carta h3 = CARTAS.get("3H"); 
-    	final Carta s4 = CARTAS.get("4S"); 
-    	final Carta cA = CARTAS.get("AC"); 
-    	final Carta hA = CARTAS.get("AH"); 
-    	
-    	final Mano manoJugadorNegro = new Mano(Arrays.asList(c2, h3, s4, cA, hA), TipoMano.PAR);
+    	    	
+    	final Mano manoJugadorBlanco = new Mano(getCartasFromString("2H 3D 5S 8C"), TipoMano.CARTA_ALTA);
+    	    	
+    	final Mano manoJugadorNegro = new Mano(getCartasFromString("2C 3H 4S AC AH"), TipoMano.PAR);
     	
     	// when
         Exception exception = assertThrows(ExceptionValidationPoker.class, () -> {
@@ -220,22 +153,10 @@ class PokerTest {
     	
     	// given
     	final Poker juego = new Poker();
-    	
-    	final Carta h2 = CARTAS.get("2H");
-    	final Carta d3 = CARTAS.get("3D"); 
-    	final Carta s3 = CARTAS.get("3S"); 
-    	final Carta cK = CARTAS.get("KC"); 
-    	final Carta dK = CARTAS.get("KD"); 
-    	
-    	final Mano manoJugadorBlanco = new Mano(Arrays.asList(h2, d3, s3, cK, dK), TipoMano.DOBLE_PAR);
-    	
-    	final Carta c2 = CARTAS.get("2C");
-    	final Carta h3 = CARTAS.get("3H"); 
-    	final Carta s4 = CARTAS.get("4S"); 
-    	final Carta c8 = CARTAS.get("8C"); 
-    	final Carta hA = CARTAS.get("AH"); 
-    	
-    	final Mano manoJugadorNegro = new Mano(Arrays.asList(c2, h3, s4, c8, hA), TipoMano.DOBLE_PAR);
+
+    	final Mano manoJugadorBlanco = new Mano(getCartasFromString("2H 3D 3S KC KD"), TipoMano.DOBLE_PAR);
+    	    	
+    	final Mano manoJugadorNegro = new Mano(getCartasFromString("2C 3H 4S 8C AH"), TipoMano.DOBLE_PAR);
 
     	// when
     	final Ganador cartasGanadoraActual = juego.getValidationbyManoMayor(manoJugadorBlanco, manoJugadorNegro);
@@ -252,22 +173,10 @@ class PokerTest {
     	
     	// given
     	final Poker juego = new Poker();
+    	    	
+    	final Mano manoJugadorBlanco = new Mano(getCartasFromString("2H 3D 5S 8C KD"), TipoMano.DOBLE_PAR);
     	
-    	final Carta h2 = CARTAS.get("2H");
-    	final Carta d3 = CARTAS.get("3D"); 
-    	final Carta s5 = CARTAS.get("5S"); 
-    	final Carta c8 = CARTAS.get("8C"); 
-    	final Carta dK = CARTAS.get("KD"); 
-    	
-    	final Mano manoJugadorBlanco = new Mano(Arrays.asList(h2, d3, s5, c8, dK), TipoMano.DOBLE_PAR);
-    	
-    	final Carta c2 = CARTAS.get("2C");
-    	final Carta h3 = CARTAS.get("3H"); 
-    	final Carta s3 = CARTAS.get("3S"); 
-    	final Carta cA = CARTAS.get("AC"); 
-    	final Carta hA = CARTAS.get("AH"); 
-    	
-    	final Mano manoJugadorNegro = new Mano(Arrays.asList(c2, h3, s3, cA, hA), TipoMano.DOBLE_PAR);
+    	final Mano manoJugadorNegro = new Mano(getCartasFromString("2C 3H 3S AC AH"), TipoMano.DOBLE_PAR);
 
     	// when
     	final Ganador cartasGanadoraActual = juego.getValidationbyManoMayor(manoJugadorBlanco, manoJugadorNegro);
@@ -275,6 +184,20 @@ class PokerTest {
     	// then 
     	final String cartasExpected = VALOR_3.concat(", ").concat(VALOR_A);
     	assertEquals(cartasExpected, cartasGanadoraActual.getCartaGanadora());
+    }
+    
+    private List<Carta> getCartasFromString (String cartas){
+    	
+    	List<Carta> listOfCartas = new ArrayList<>();
+    	
+        String data = cartas.trim();
+        String[] split = data.split(" ");
+        
+        for (String keyCard : split) {
+			listOfCartas.add(CARTAS.get(keyCard));
+		}
+           	
+    	return listOfCartas;
     }
 
     /* terna
