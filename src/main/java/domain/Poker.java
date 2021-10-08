@@ -55,71 +55,70 @@ public class Poker {
 	
 	private String getValorCartaPar(List<Carta> cartas) {
 		
-		String valorCartaMano = "";
+		String valueCardPar = "";
 		
 		for (Carta carta : cartas) {
 			
-			final String valorCarta = carta.getValor();
-			int valoresIguales = 0;
+			final String valueCard = carta.getValor();
+			int equalValorPar = 0;
 			
 			for (Carta card : cartas) {
-				if(card.getValor().equals(valorCarta)) {
-					valoresIguales++;
+				if(card.getValor().equals(valueCard)) {
+					equalValorPar++;
 				}
 			}
 			
-			if(valoresIguales == PAR) {
-				valorCartaMano = valorCarta;
+			if(equalValorPar == PAR) {
+				valueCardPar = valueCard;
 			}
 			
 		}
-		return valorCartaMano;
+		return valueCardPar;
 	}
 	
 	private Ganador validatePar(Mano manoJugador1, Mano manoJugador2){
 		
-		final String valorParJugador1 = getValorCartaPar(manoJugador1.getCartas());
-		final String valorParJugador2 = getValorCartaPar(manoJugador2.getCartas());
+		final String valueParPlayer1 = getValorCartaPar(manoJugador1.getCartas());
+		final String valueParPlayer2 = getValorCartaPar(manoJugador2.getCartas());
 		
-		if(valorParJugador1.isEmpty()) {
-			return new Ganador(valorParJugador2, TipoMano.PAR);
+		if(valueParPlayer1.isEmpty()) {
+			return new Ganador(valueParPlayer2, TipoMano.PAR);
 		}
-		if(valorParJugador2.isEmpty()) {
-			return new Ganador(valorParJugador1, TipoMano.PAR);
+		if(valueParPlayer2.isEmpty()) {
+			return new Ganador(valueParPlayer1, TipoMano.PAR);
 		}
-		if(valorParJugador1.equals(valorParJugador2)) {
+		if(valueParPlayer1.equals(valueParPlayer2)) {
 			// TODO implementar desempate de acuerdo a las demas cartas
 		}
 
 		return null;
 	}
 	
-	private int getValorCartaAlta(List<Carta> cartas) {
-		int valorMaximo = 0;
+	private int getValueHighCard(List<Carta> cartas) {
+		int maxValue = 0;
 
 		for (Carta card : cartas) {
 			int valorCartaInt = VALORES.indexOf(card.getValor());
-			if (valorCartaInt >= valorMaximo) {
-				valorMaximo = valorCartaInt;
+			if (valorCartaInt >= maxValue) {
+				maxValue = valorCartaInt;
 			}
-
 		}
-		return valorMaximo;
+		return maxValue;
 	}
 	
 	
 	private Ganador validateCartaAlta(Mano manoJugador1, Mano manoJugador2) {
 		
-		final int valorCartaAltaJugador1 = getValorCartaAlta(manoJugador1.getCartas());
-		final int valorCartaAltaJugador2 = getValorCartaAlta(manoJugador2.getCartas());
+		final int valueHighCardPlayer1 = getValueHighCard(manoJugador1.getCartas());
+		final int balueHighCardPlayer2 = getValueHighCard(manoJugador2.getCartas());
 		
-		if(valorCartaAltaJugador1 > valorCartaAltaJugador2) {
-			return new Ganador(getValorCartaByIndex(valorCartaAltaJugador1), TipoMano.CARTA_ALTA);
+		if(valueHighCardPlayer1 > balueHighCardPlayer2) {
+			return new Ganador(getValueCardByIndex(valueHighCardPlayer1), TipoMano.CARTA_ALTA);
 		}
-		if(valorCartaAltaJugador2 > valorCartaAltaJugador1) {
-			return new Ganador(getValorCartaByIndex(valorCartaAltaJugador2), TipoMano.CARTA_ALTA);
+		if(balueHighCardPlayer2 > valueHighCardPlayer1) {
+			return new Ganador(getValueCardByIndex(balueHighCardPlayer2), TipoMano.CARTA_ALTA);
 		}
-		if(valorCartaAltaJugador2 == valorCartaAltaJugador1) {
+		if(balueHighCardPlayer2 == valueHighCardPlayer1) {
 			// TODO implementar desempate de acuerdo a las demas cartas
 		}
 		
@@ -128,76 +127,68 @@ public class Poker {
 	
 	private Carta getCartaDoblePar(List<Carta> cartas) {
 		
-		Carta valorCartaMano = null;
+		Carta cardDoublePar = null;
 		
 		for (Carta carta : cartas) {
 			
 			final String valorCarta = carta.getValor();
-			int valoresIguales = 0;
+			int equalValorPar = 0;
 			
 			for (Carta card : cartas) {
 				if(card.getValor().equals(valorCarta)) {
-					valoresIguales++;
+					equalValorPar++;
 				}
 			}
 			
-			if(valoresIguales == PAR) {
-				valorCartaMano = carta;
+			if(equalValorPar == PAR) {
+				cardDoublePar = carta;
 				break;
 			}
 			
 		}
-		return valorCartaMano;
+		return cardDoublePar;
 	}
 	
-	private List<Carta> getNewListWithOutSpecificCard(List<Carta> cartasJugador, final Carta valorCarta) {
-		if(Objects.nonNull(valorCarta)) {
-			cartasJugador = cartasJugador.stream().filter(carta -> 
-			!carta.getValor().equals(valorCarta.getValor()))
+	private List<Carta> getNewListWithOutSpecificCard(List<Carta> playerCards, final Carta cardToRemove) {
+		if(Objects.nonNull(cardToRemove)) {
+			playerCards = playerCards.stream().filter(carta -> 
+			!carta.getValor().equals(cardToRemove.getValor()))
 			.collect(Collectors.toList());
 		}
-		return cartasJugador;
+		return playerCards;
 	}
 	
 	private Ganador validateDoblePar(Mano manoJugador1, Mano manoJugador2) {
 				
-		final Carta primerParJugador1 = getCartaDoblePar(manoJugador1.getCartas());
+		final Carta firstParPlayer1 = getCartaDoblePar(manoJugador1.getCartas());
+		final List<Carta> cardsPlayer1Filtred = getNewListWithOutSpecificCard(manoJugador1.getCartas(), firstParPlayer1);
+		final Carta secondParPlayer1 = getCartaDoblePar(cardsPlayer1Filtred);
 		
-		List<Carta> cartasJugador1 = getNewListWithOutSpecificCard(manoJugador1.getCartas(), primerParJugador1);
+		final Carta firstParPlayer2 = getCartaDoblePar(manoJugador2.getCartas());
+		final List<Carta> cardsPlayer2Filtred = getNewListWithOutSpecificCard(manoJugador2.getCartas(), firstParPlayer2);
+		final Carta segundoParJugador2 = getCartaDoblePar(cardsPlayer2Filtred);
 		
-		final Carta segundoParJugador1 = getCartaDoblePar(cartasJugador1);
-		
+		final boolean noNullParsPlayer1 = Objects.nonNull(firstParPlayer1) && Objects.nonNull(secondParPlayer1);
+		final boolean noNullParsPlayer2 = Objects.nonNull(firstParPlayer2) && Objects.nonNull(segundoParJugador2);
 
-						
-		final Carta primerParJugador2 = getCartaDoblePar(manoJugador2.getCartas());
-		
-		List<Carta> cartasJugador2 = getNewListWithOutSpecificCard(manoJugador2.getCartas(), primerParJugador2);
-
-		final Carta segundoParJugador2 = getCartaDoblePar(cartasJugador2);
-		
-		
-		final boolean noNullParesJugador1 = Objects.nonNull(primerParJugador1) && Objects.nonNull(segundoParJugador1);
-		
-		final boolean noNullParesJugador2 = Objects.nonNull(primerParJugador2) && Objects.nonNull(segundoParJugador2);
-
-		if (noNullParesJugador1 && !noNullParesJugador2) {
-			final String cartaGanadora = primerParJugador1.getValor().concat(", ").concat(segundoParJugador1.getValor());
-			return new Ganador(cartaGanadora, TipoMano.DOBLE_PAR);
+		if (noNullParsPlayer1 && !noNullParsPlayer2) {
+			final String winnerCards = firstParPlayer1.getValor().concat(", ").concat(secondParPlayer1.getValor());
+			return new Ganador(winnerCards, TipoMano.DOBLE_PAR);
 		}
 		
-		if (!noNullParesJugador1 && noNullParesJugador2) {
-			final String cartaGanadora = primerParJugador2.getValor().concat(", ").concat(segundoParJugador2.getValor());
-			return new Ganador(cartaGanadora, TipoMano.DOBLE_PAR);
+		if (!noNullParsPlayer1 && noNullParsPlayer2) {
+			final String winnerCards = firstParPlayer2.getValor().concat(", ").concat(segundoParJugador2.getValor());
+			return new Ganador(winnerCards, TipoMano.DOBLE_PAR);
 		}
 		
-		if (noNullParesJugador1 && noNullParesJugador2){
+		if (noNullParsPlayer1 && noNullParsPlayer2){
 			// TODO implementar empate de doble par
 		}
 				
 		return new Ganador();
 	}
 	
-	private String getValorCartaByIndex(int index) {
+	private String getValueCardByIndex(int index) {
 		return VALORES.get(index);
 	}
 
