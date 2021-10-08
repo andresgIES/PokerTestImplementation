@@ -2,6 +2,7 @@ import static constants.Constants.CARTAS;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,12 +30,12 @@ class PokerTest {
     	// given
     	final Poker juego = new Poker();
     	    	
-    	final Mano handPlayerWhite = new Mano(getCartasFromString("2H 3D 5S 9C KD"), TipoMano.CARTA_ALTA);
+    	final Mano handPlayerWhite = new Mano(getCardsFromString("2H 3D 5S 9C KD"), TipoMano.CARTA_ALTA);
     	    	
-    	final Mano handPlayerBlack = new Mano(getCartasFromString("2C 3H 4S 8C AH"), TipoMano.CARTA_ALTA);
+    	final Mano handPlayerBlack = new Mano(getCardsFromString("2C 3H 4S 8C AH"), TipoMano.CARTA_ALTA);
 
     	// when
-    	final Ganador actualCardWinner = juego.getValidationbyManoMayor(handPlayerWhite, handPlayerBlack);
+    	final Ganador actualCardWinner = juego.getValidationByMayorHand(handPlayerWhite, handPlayerBlack);
     	
     	// then
     	assertEquals(VALOR_A, actualCardWinner.getCartaGanadora());
@@ -48,12 +49,12 @@ class PokerTest {
     	// given
     	final Poker juego = new Poker();
     	
-    	final Mano handPlayerWhite = new Mano(getCartasFromString("2H 3D 5S 9C KD "), TipoMano.CARTA_ALTA);
+    	final Mano handPlayerWhite = new Mano(getCardsFromString("2H 3D 5S 9C KD "), TipoMano.CARTA_ALTA);
     	    	
-    	final Mano handPlayerBlack = new Mano(getCartasFromString("2C 3H 4S 8C 2C"), TipoMano.CARTA_ALTA);
+    	final Mano handPlayerBlack = new Mano(getCardsFromString("2C 3H 4S 8C 2C"), TipoMano.CARTA_ALTA);
 
     	// when
-    	final Ganador actualCardWinner = juego.getValidationbyManoMayor(handPlayerWhite, handPlayerBlack);
+    	final Ganador actualCardWinner = juego.getValidationByMayorHand(handPlayerWhite, handPlayerBlack);
     	
     	// then
     	assertEquals(VALOR_K, actualCardWinner.getCartaGanadora());
@@ -66,13 +67,13 @@ class PokerTest {
     	// given
     	final Poker juego = new Poker();
     	    	
-    	final Mano handPlayerWhite = new Mano(getCartasFromString("2H 3D 5S 8C"), TipoMano.CARTA_ALTA);
+    	final Mano handPlayerWhite = new Mano(getCardsFromString("2H 3D 5S 8C"), TipoMano.CARTA_ALTA);
     	    	
-    	final Mano handPlayerBlack = new Mano(getCartasFromString("2C 3H 4S AC AH"), null);
+    	final Mano handPlayerBlack = new Mano(getCardsFromString("2C 3H 4S AC AH"), null);
     	
     	// when
         Exception exception = assertThrows(ExceptionValidationPoker.class, () -> {
-        	juego.getValidationbyManoMayor(handPlayerWhite, handPlayerBlack);
+        	juego.getValidationByMayorHand(handPlayerWhite, handPlayerBlack);
         });
 
         // then
@@ -91,12 +92,12 @@ class PokerTest {
     	// given
     	final Poker juego = new Poker();
     	    	
-    	final Mano manoJugadorBlanco = new Mano(getCartasFromString("2H 3D 5S KC KD"), TipoMano.PAR);
+    	final Mano manoJugadorBlanco = new Mano(getCardsFromString("2H 3D 5S KC KD"), TipoMano.PAR);
     	    	
-    	final Mano handPlayerBlack = new Mano(getCartasFromString("2C 3H 4S 8C AH"), TipoMano.CARTA_ALTA);
+    	final Mano handPlayerBlack = new Mano(getCardsFromString("2C 3H 4S 8C AH"), TipoMano.CARTA_ALTA);
 
     	// when
-    	final Ganador actualCardWinner = juego.getValidationbyManoMayor(manoJugadorBlanco, handPlayerBlack);
+    	final Ganador actualCardWinner = juego.getValidationByMayorHand(manoJugadorBlanco, handPlayerBlack);
     	
     	// then
     	assertEquals(VALOR_K, actualCardWinner.getCartaGanadora());
@@ -110,12 +111,12 @@ class PokerTest {
     	// given
     	final Poker juego = new Poker();
     	    	
-    	final Mano handPlayerWhite = new Mano(getCartasFromString("2H 3D 5S 8C KD"), TipoMano.CARTA_ALTA);
+    	final Mano handPlayerWhite = new Mano(getCardsFromString("2H 3D 5S 8C KD"), TipoMano.CARTA_ALTA);
     	    	
-    	final Mano handPlayerBlack = new Mano(getCartasFromString("2C 3H 4S AC AH"), TipoMano.PAR);
+    	final Mano handPlayerBlack = new Mano(getCardsFromString("2C 3H 4S AC AH"), TipoMano.PAR);
 
     	// when
-    	final Ganador actualCardWinner = juego.getValidationbyManoMayor(handPlayerWhite, handPlayerBlack);
+    	final Ganador actualCardWinner = juego.getValidationByMayorHand(handPlayerWhite, handPlayerBlack);
     	
     	// then
     	assertEquals(VALOR_A, actualCardWinner.getCartaGanadora());
@@ -129,13 +130,13 @@ class PokerTest {
     	// given
     	final Poker juego = new Poker();
     	    	
-    	final Mano handPlayerWhite = new Mano(getCartasFromString("2H 3D 5S 8C"), TipoMano.CARTA_ALTA);
+    	final Mano handPlayerWhite = new Mano(getCardsFromString("2H 3D 5S 8C"), TipoMano.CARTA_ALTA);
     	    	
-    	final Mano handPlayerBlack = new Mano(getCartasFromString("2C 3H 4S AC AH"), TipoMano.PAR);
+    	final Mano handPlayerBlack = new Mano(getCardsFromString("2C 3H 4S AC AH"), TipoMano.PAR);
     	
     	// when
         Exception exception = assertThrows(ExceptionValidationPoker.class, () -> {
-        	juego.getValidationbyManoMayor(handPlayerWhite, handPlayerBlack);
+        	juego.getValidationByMayorHand(handPlayerWhite, handPlayerBlack);
         });
 
         // then
@@ -154,12 +155,12 @@ class PokerTest {
     	// given
     	final Poker juego = new Poker();
 
-    	final Mano handPlayerWhite = new Mano(getCartasFromString("2H 3D 3S KC KD"), TipoMano.DOBLE_PAR);
+    	final Mano handPlayerWhite = new Mano(getCardsFromString("2H 3D 3S KC KD"), TipoMano.DOBLE_PAR);
     	    	
-    	final Mano handPlayerBlack = new Mano(getCartasFromString("2C 3H 4S 8C AH"), TipoMano.DOBLE_PAR);
+    	final Mano handPlayerBlack = new Mano(getCardsFromString("2C 3H 4S 8C AH"), TipoMano.DOBLE_PAR);
 
     	// when
-    	final Ganador actualCardsWinner = juego.getValidationbyManoMayor(handPlayerWhite, handPlayerBlack);
+    	final Ganador actualCardsWinner = juego.getValidationByMayorHand(handPlayerWhite, handPlayerBlack);
     	
     	// then 
     	final String cartasExpected = VALOR_3.concat(", ").concat(VALOR_K);
@@ -174,48 +175,58 @@ class PokerTest {
     	// given
     	final Poker juego = new Poker();
     	    	
-    	final Mano handPlayerWhite = new Mano(getCartasFromString("2H 3D 5S 8C KD"), TipoMano.DOBLE_PAR);
+    	final Mano handPlayerWhite = new Mano(getCardsFromString("2H 3D 5S 8C KD"), TipoMano.DOBLE_PAR);
     	
-    	final Mano handPlayerBlack = new Mano(getCartasFromString("2C 3H 3S AC AH"), TipoMano.DOBLE_PAR);
+    	final Mano handPlayerBlack = new Mano(getCardsFromString("2C 3H 3S AC AH"), TipoMano.DOBLE_PAR);
 
     	// when
-    	final Ganador actualCardsWinner = juego.getValidationbyManoMayor(handPlayerWhite, handPlayerBlack);
+    	final Ganador actualCardsWinner = juego.getValidationByMayorHand(handPlayerWhite, handPlayerBlack);
     	
     	// then 
     	final String cartasExpected = VALOR_3.concat(", ").concat(VALOR_A);
     	assertEquals(cartasExpected, actualCardsWinner.getCartaGanadora());
     }
     
-    private List<Carta> getCartasFromString (String cartas){
-    	
-    	List<Carta> listOfCartas = new ArrayList<>();
-    	
-        String data = cartas.trim();
-        String[] split = data.split(" ");
-        
-        for (String keyCard : split) {
-			listOfCartas.add(CARTAS.get(keyCard));
-		}
-           	
-    	return listOfCartas;
-    }
-
-    /* terna
+    // terna
 
     @DisplayName("Blanco: 2H 3D KS KC KD  Negro: 2C 3H 4S 8C AH Blanco gana. - con Terna: Rey ")
     @Test
-    void testTerna() {
-        fail("no implementado");
+    void testTerna() throws ExceptionValidationPoker {
+    	
+    	// given
+    	final Poker juego = new Poker();
+    	    	
+    	final Mano handPlayerWhite = new Mano(getCardsFromString("2H 3D KS KC KD"), TipoMano.TERNA);
+    	
+    	final Mano handPlayerBlack = new Mano(getCardsFromString("2C 3H 4S 8C AH"), TipoMano.TERNA);
+
+    	// when
+    	final Ganador actualCardsWinner = juego.getValidationByMayorHand(handPlayerWhite, handPlayerBlack);
+    	
+    	// then 
+    	assertEquals(VALOR_K, actualCardsWinner.getCartaGanadora());
     }
 
     @DisplayName("Blanco: 2H 3D 5S 8C KD  Negro: 2C 3H AS AC AH Negro gana. - con Terna: As ")
     @Test
-    void testTerna2() {
-        fail("no implementado");
+    void testTerna2() throws ExceptionValidationPoker {
+    	
+    	// given
+    	final Poker juego = new Poker();
+    	    	
+    	final Mano handPlayerWhite = new Mano(getCardsFromString("2H 3D 5S 8C KD"), TipoMano.TERNA);
+    	
+    	final Mano handPlayerBlack = new Mano(getCardsFromString("2C 3H AS AC AH"), TipoMano.TERNA);
+
+    	// when
+    	final Ganador actualCardsWinner = juego.getValidationByMayorHand(handPlayerWhite, handPlayerBlack);
+    	
+    	// then 
+    	assertEquals(VALOR_A, actualCardsWinner.getCartaGanadora());
     }
 
 
-    // escalera
+    /* escalera
     @DisplayName("Blanco: 2H 3D 4S 5C 6D  Negro: 2C 3H 4S 8C AH Blanco gana. - con Escalera ")
     @Test
     void testEscalera() {
@@ -297,4 +308,18 @@ class PokerTest {
     }
     
     */
+    
+    private List<Carta> getCardsFromString (String cartas){
+    	
+    	List<Carta> listOfCartas = new ArrayList<>();
+    	
+        String data = cartas.trim();
+        String[] split = data.split(" ");
+        
+        for (String keyCard : split) {
+			listOfCartas.add(CARTAS.get(keyCard));
+		}
+           	
+    	return listOfCartas;
+    }
 }
