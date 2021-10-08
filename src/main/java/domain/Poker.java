@@ -4,6 +4,8 @@ import static constants.Constants.SIZE_HAND;
 import static constants.Constants.VALORES;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import enums.TipoMano;
 import exceptions.ExceptionValidationPoker;
@@ -29,6 +31,10 @@ public class Poker {
 		
 		if(TipoMano.PAR.getValor() == validateManoMayor(manoJugador1, manoJugador2)) {
 			return validatePar(manoJugador1, manoJugador2);
+		}
+		
+		if(TipoMano.DOBLE_PAR.getValor() == validateManoMayor(manoJugador1, manoJugador2)) {
+			return validateDoblePar(manoJugador1, manoJugador2);
 		}
 		
 		return null;
@@ -65,7 +71,7 @@ public class Poker {
 			if(valoresIguales == PAR) {
 				valorCartaMano = valorCarta;
 			}
-		
+			
 		}
 		return valorCartaMano;
 	}
@@ -118,6 +124,77 @@ public class Poker {
 		}
 		
 		return null;
+	}
+	
+	private Carta getCartaDoblePar(List<Carta> cartas) {
+		
+		Carta valorCartaMano = null;
+		
+		for (Carta carta : cartas) {
+			
+			final String valorCarta = carta.getValor();
+			int valoresIguales = 0;
+			
+			for (Carta card : cartas) {
+				if(card.getValor().equals(valorCarta)) {
+					valoresIguales++;
+				}
+			}
+			
+			if(valoresIguales == PAR) {
+				valorCartaMano = carta;
+				break;
+			}
+			
+		}
+		return valorCartaMano;
+	}
+	
+	private List<Carta> getNewListWithOutSpecificCard(List<Carta> cartasJugador, final Carta valorCarta) {
+		if(Objects.nonNull(valorCarta)) {
+			cartasJugador = cartasJugador.stream().filter(carta -> 
+			!carta.getValor().equals(valorCarta.getValor()))
+			.collect(Collectors.toList());
+		}
+		return cartasJugador;
+	}
+	
+	private Ganador validateDoblePar(Mano manoJugador1, Mano manoJugador2) {
+				
+		final Carta primerParJugador1 = getCartaDoblePar(manoJugador1.getCartas());
+		
+		List<Carta> cartasJugador1 = getNewListWithOutSpecificCard(manoJugador1.getCartas(), primerParJugador1);
+		
+		final Carta segundoParJugador1 = getCartaDoblePar(cartasJugador1);
+		
+
+						
+		final Carta primerParJugador2 = getCartaDoblePar(manoJugador2.getCartas());
+		
+		List<Carta> cartasJugador2 = getNewListWithOutSpecificCard(manoJugador2.getCartas(), primerParJugador2);
+
+		final Carta segundoParJugador2 = getCartaDoblePar(cartasJugador2);
+		
+		
+		final boolean noNullParesJugador1 = Objects.nonNull(primerParJugador1) && Objects.nonNull(segundoParJugador1);
+		
+		final boolean noNullParesJugador2 = Objects.nonNull(primerParJugador2) && Objects.nonNull(segundoParJugador2);
+
+		if (noNullParesJugador1 && !noNullParesJugador2) {
+			final String cartaGanadora = primerParJugador1.getValor().concat(", ").concat(segundoParJugador1.getValor());
+			return new Ganador(cartaGanadora, TipoMano.DOBLE_PAR);
+		}
+		
+		if (!noNullParesJugador1 && noNullParesJugador2) {
+			final String cartaGanadora = primerParJugador2.getValor().concat(", ").concat(segundoParJugador2.getValor());
+			return new Ganador(cartaGanadora, TipoMano.DOBLE_PAR);
+		}
+		
+		if (noNullParesJugador1 && noNullParesJugador2){
+			// TODO implementar empate de doble par
+		}
+				
+		return new Ganador();
 	}
 	
 	private String getValorCartaByIndex(int index) {
