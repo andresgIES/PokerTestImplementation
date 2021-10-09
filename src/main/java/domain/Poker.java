@@ -43,6 +43,10 @@ public class Poker {
 			return validateStair(handPlayer1, handPlayer2);
 		}
 		
+		if(TipoMano.COLOR.getValor() == validateMayorHand(handPlayer1, handPlayer2)) {
+			return validateColor(handPlayer1, handPlayer2);
+		}
+		
 		return null;
 	}
 
@@ -169,6 +173,27 @@ public class Poker {
 		}
 		
 		return null;	
+	}
+	
+	private Ganador validateColor(Mano handPlayer1, Mano handPlayer2) {
+		
+		final boolean sameColorPlayer1 = PokerValidations.allSameColor(handPlayer1.getCartas());
+		final boolean sameColorPlayer2 = PokerValidations.allSameColor(handPlayer2.getCartas());
+				
+		String colorGanador = "Gana el palo: ";
+				
+		if(sameColorPlayer1 && sameColorPlayer2) {
+			// TODO implementar desempate de color
+		}	
+
+		if(sameColorPlayer1) {
+			return new Ganador(colorGanador + (handPlayer1.getCartas().get(0).getPalo().getNombre()), TipoMano.COLOR);
+		}
+		if(sameColorPlayer2) {
+			return new Ganador(colorGanador + (handPlayer2.getCartas().get(0).getPalo().getNombre()), TipoMano.COLOR);		}
+	
+		
+		return null;
 	}
 	
 		

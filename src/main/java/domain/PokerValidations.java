@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import enums.Palo;
 import exceptions.ExceptionValidationPoker;
 
 public final class PokerValidations {
@@ -17,7 +18,7 @@ public final class PokerValidations {
 	
 	private PokerValidations() {
 		super();
-	}
+	}	
 	
 	public static final int getValueHighCard(List<Carta> cards) {
 		
@@ -124,6 +125,21 @@ public final class PokerValidations {
 		}
 				
 		return indexFirstCard;
+	}
+
+	public static boolean allSameColor(List<Carta> cartas) {
+		
+		boolean allHaveSameColor = true;
+		
+		final Palo colorMazo = cartas.get(0).getPalo();
+				
+		for (Carta card : cartas) {
+			if(!colorMazo.equals(card.getPalo())) {
+				allHaveSameColor = false;
+				break;
+			}
+		}
+		return allHaveSameColor;
 	}
 
 }

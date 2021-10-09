@@ -266,20 +266,46 @@ class PokerTest {
     }
 
 
-    /*color
+    // color
     @DisplayName("Blanco: 2H 3H 5H KH 8H  Negro: 2C 3H 4S 8C AH Blanco gana. - con color ")
     @Test
-    void testColor() {
-        fail("no implementado");
+    void testColor() throws ExceptionValidationPoker {
+    	
+    	// given
+    	final Poker juego = new Poker();
+    	    	
+    	final Mano handPlayerWhite = new Mano(getCardsFromString("2H 3H 5H KH 8H"), TipoMano.COLOR);
+    	
+    	final Mano handPlayerBlack = new Mano(getCardsFromString("2C 3H 4S 8C AH"), TipoMano.COLOR);
+
+    	// when
+    	final Ganador actualCardsWinner = juego.getValidationByMayorHand(handPlayerWhite, handPlayerBlack);
+    	
+    	// then 
+    	final String expectedMessageWinner = "Gana el palo: Corazones";
+    	assertEquals(expectedMessageWinner, actualCardsWinner.getCartaGanadora());
     }
 
-    @DisplayName("Blanco: 2H 3D 5S 8C KD  Negro: 2C 3C 4C AC RC Negro gana. - con color ")
+    @DisplayName("Blanco: 2H 3D 5S 8C KD  Negro: 2C 3C 4C AC QC Negro gana. - con color ")
     @Test
-    void testColor2() {
-        fail("no implementado");
+    void testColor2() throws ExceptionValidationPoker {
+    	
+    	// given
+    	final Poker juego = new Poker();
+    	    	
+    	final Mano handPlayerWhite = new Mano(getCardsFromString("2H 3D 5S 8C KD"), TipoMano.COLOR);
+    	
+    	final Mano handPlayerBlack = new Mano(getCardsFromString("2C 3C 4C AC QC"), TipoMano.COLOR);
+
+    	// when
+    	final Ganador actualCardsWinner = juego.getValidationByMayorHand(handPlayerWhite, handPlayerBlack);
+    	
+    	// then 
+    	final String expectedMessageWinner = "Gana el palo: Treboles";
+    	assertEquals(expectedMessageWinner, actualCardsWinner.getCartaGanadora());
     }
 
-    //full house
+    /* full house
     @DisplayName("Blanco: 2H 2D KS KC KD  Negro: 2C 3H 4S 8C AH Blanco gana. - con full house ")
     @Test
     void testFullHouse() {
