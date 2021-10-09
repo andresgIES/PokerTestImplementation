@@ -3,6 +3,8 @@ package domain;
 import static constants.Constants.SIZE_HAND;
 import static constants.Constants.VALORES;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -14,6 +16,8 @@ public class Poker {
 	
 	private static final int PAR = 2;
 	private static final int TERNA = 3;
+	private static final int INDICE_CARTA_10 = 8;
+
 	
 	private void validateHand(Mano mano) throws ExceptionValidationPoker {
 		if(mano == null || mano.getCartas().isEmpty() || mano.getCartas().size() != SIZE_HAND || mano.getTipoDeMano() == null) {
@@ -40,6 +44,10 @@ public class Poker {
 		
 		if(TipoMano.TERNA.getValor() == validateMayorHand(handPlayer1, handPlayer2)) {
 			return validateTerna(handPlayer1, handPlayer2);
+		}
+		
+		if(TipoMano.ESCALERA.getValor() == validateMayorHand(handPlayer1, handPlayer2)) {
+			return validateStair(handPlayer1, handPlayer2);
 		}
 		
 		return null;
@@ -238,13 +246,58 @@ public class Poker {
 		return null;
 	}
 	
+	
+	private int getCorrectSequence(List<Carta> hand) throws ExceptionValidationPoker {
+		
+		int indexFirstCard = -1;
+		
+		Comparator<Carta> compareByValue = 
+				(Carta c1, Carta c2) -> getIndexCardByValue(c1.getValor()).compareTo(getIndexCardByValue(c2.getValor()));
+		Collections.sort(hand, compareByValue);
+				
+		int firstPosition = getIndexCardByValue(hand.get(0).getValor());
+		
+		if (firstPosition >= INDICE_CARTA_10 ) {
+			throw new ExceptionValidationPoker(ExceptionValidationPoker.INVALID_STAIR);
+		}
+		
+		if (getValueCardByIndex(firstPosition + 1).equals(hand.get(1).getValor()) && 
+			getValueCardByIndex(firstPosition + 2).equals(hand.get(2).getValor()) &&
+			getValueCardByIndex(firstPosition + 3).equals(hand.get(3).getValor()) &&
+			getValueCardByIndex(firstPosition + 4).equals(hand.get(4).getValor())) {
+			indexFirstCard = firstPosition;
+		}
+				
+		return indexFirstCard;
+	}
+	
+	private Ganador validateStair(Mano handPlayer1, Mano handPlayer2) throws ExceptionValidationPoker {
+		
+		final int beginStairPlayer1 = getCorrectSequence(handPlayer1.getCartas());
+		final int beginStairPlayer2 = getCorrectSequence(handPlayer2.getCartas());
+		
+		if(beginStairPlayer1 > beginStairPlayer2) {
+			return new Ganador(getValueCardByIndex(beginStairPlayer1), TipoMano.ESCALERA);
+		}
+		if(beginStairPlayer1 < beginStairPlayer2) {
+			return new Ganador(getValueCardByIndex(beginStairPlayer2), TipoMano.ESCALERA);
+		}
+		if(beginStairPlayer1 == beginStairPlayer2) {
+			// TODO implementar desempate escalera
+		}
+		
+		return null;
+	}
+	
+
+
 
 
 	private String getValueCardByIndex(int index) {
 		return VALORES.get(index);
 	}
 	
-	private int getIndexCardByValue(String valor) {
+	private Integer getIndexCardByValue(String valor) {
 		return VALORES.indexOf(valor);
 	}
 

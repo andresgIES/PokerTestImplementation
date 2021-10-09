@@ -6,6 +6,8 @@ public class ExceptionValidationPoker extends Exception {
 
 	public static final String HAND_INVALID = "mano invalida";
 
+	public static final String INVALID_STAIR = "escalera invalida";
+
 	public ExceptionValidationPoker(String s) {
 		super(s);
 	}

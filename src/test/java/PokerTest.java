@@ -22,6 +22,7 @@ class PokerTest {
 	private static final String VALOR_K = "K";
 	private static final String VALOR_A = "A";
 	private static final String VALOR_3 = "3";
+	private static final Object VALOR_2 = "2";
 
     @DisplayName("Blanco: 2H 3D 5S 9C KD  Negro: 2C 3H 4S 8C AH Negro gana. - con la carta alta: As ")
     @Test
@@ -226,21 +227,46 @@ class PokerTest {
     }
 
 
-    /* escalera
+    // escalera
     @DisplayName("Blanco: 2H 3D 4S 5C 6D  Negro: 2C 3H 4S 8C AH Blanco gana. - con Escalera ")
     @Test
-    void testEscalera() {
-        fail("no implementado");
+    void testEscalera() throws ExceptionValidationPoker {    	
+    	
+    	// given
+    	final Poker juego = new Poker();
+    	    	
+    	final Mano handPlayerWhite = new Mano(getCardsFromString("2H 3D 4S 5C 6D"), TipoMano.ESCALERA);
+    	
+    	final Mano handPlayerBlack = new Mano(getCardsFromString("2C 3H 4S 8C AH"), TipoMano.ESCALERA);
+
+    	// when
+    	final Ganador actualCardsWinner = juego.getValidationByMayorHand(handPlayerWhite, handPlayerBlack);
+    	
+    	// then 
+    	assertEquals(VALOR_2, actualCardsWinner.getCartaGanadora());
+ 
     }
 
     @DisplayName("Blanco: 2H 3D 5S 8C KD  Negro: 2C 3H 4S 5C 6H Negro gana. - con Escalera ")
     @Test
-    void testEscalera2() {
-        fail("no implementado");
+    void testEscalera2() throws ExceptionValidationPoker {
+
+    	// given
+    	final Poker juego = new Poker();
+    	    	
+    	final Mano handPlayerWhite = new Mano(getCardsFromString("2H 3D 5S 8C KD"), TipoMano.ESCALERA);
+    	
+    	final Mano handPlayerBlack = new Mano(getCardsFromString("2C 3H 4S 5C 6H"), TipoMano.ESCALERA);
+
+    	// when
+    	final Ganador actualCardsWinner = juego.getValidationByMayorHand(handPlayerWhite, handPlayerBlack);
+    	
+    	// then 
+    	assertEquals(VALOR_2, actualCardsWinner.getCartaGanadora());
     }
 
 
-    // color
+    /*color
     @DisplayName("Blanco: 2H 3H 5H KH 8H  Negro: 2C 3H 4S 8C AH Blanco gana. - con color ")
     @Test
     void testColor() {
