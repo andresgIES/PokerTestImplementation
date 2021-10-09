@@ -7,7 +7,9 @@ public class ExceptionValidationPoker extends Exception {
 	public static final String HAND_INVALID = "mano invalida";
 
 	public static final String INVALID_STAIR = "escalera invalida";
-
+	
+	public static final String INVALID_TERNA_FULL_HOUSE = "terna invalida";
+	
 	public ExceptionValidationPoker(String s) {
 		super(s);
 	}

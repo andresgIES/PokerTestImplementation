@@ -305,20 +305,45 @@ class PokerTest {
     	assertEquals(expectedMessageWinner, actualCardsWinner.getCartaGanadora());
     }
 
-    /* full house
+    // full house
     @DisplayName("Blanco: 2H 2D KS KC KD  Negro: 2C 3H 4S 8C AH Blanco gana. - con full house ")
     @Test
-    void testFullHouse() {
-        fail("no implementado");
+    void testFullHouse() throws ExceptionValidationPoker {
+    	
+    	// given
+    	final Poker juego = new Poker();
+    	    	
+    	final Mano handPlayerWhite = new Mano(getCardsFromString("2H 2D KS KC KD"), TipoMano.FULL_HOUSE);
+    	
+    	final Mano handPlayerBlack = new Mano(getCardsFromString("2C 3H 4S 8C AH"), TipoMano.FULL_HOUSE);
+
+    	// when
+    	final Ganador actualCardsWinner = juego.getValidationByMayorHand(handPlayerWhite, handPlayerBlack);
+    	
+    	// then 
+    	assertEquals(VALOR_K, actualCardsWinner.getCartaGanadora());
+    	
     }
 
-    @DisplayName("Blanco: 2H 3D 5S 8C KD  Negro: 2C 2H 3S AC AH Negro gana. - con full house ")
+    @DisplayName("Blanco: 2H 3D 5S 8C KD  Negro: 2C 2H 2S AC AH Negro gana. - con full house ")
     @Test
-    void testFullHouse2() {
-        fail("no implementado");
+    void testFullHouse2() throws ExceptionValidationPoker {
+    	
+    	// given
+    	final Poker juego = new Poker();
+    	    	
+    	final Mano handPlayerWhite = new Mano(getCardsFromString("2H 3D 5S 8C KD"), TipoMano.FULL_HOUSE);
+    	
+    	final Mano handPlayerBlack = new Mano(getCardsFromString("2C 2H 2S AC AH"), TipoMano.FULL_HOUSE);
+
+    	// when
+    	final Ganador actualCardsWinner = juego.getValidationByMayorHand(handPlayerWhite, handPlayerBlack);
+    	
+    	// then 
+    	assertEquals(VALOR_K, actualCardsWinner.getCartaGanadora());
     }
 
-    // poker
+    /* poker
     @DisplayName("Blanco: 2H 2D 2S 2C KD  Negro: 2C 3H 4S 8C AH Blanco gana. - con poker: 2 ")
     @Test
     void testPoker() {

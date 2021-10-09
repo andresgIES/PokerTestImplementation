@@ -33,7 +33,10 @@ public class Ganador {
 	public void setTipoDeMano(TipoMano tipoManoGanadora) {
 		this.tipoManoGanadora = tipoManoGanadora;
 	}
-	
-	
 
+	@Override
+	public String toString() {
+		return "Ganador [cartaGanadora=" + cartaGanadora + ", tipoManoGanadora=" + tipoManoGanadora + "]";
+	}
+	
 }
