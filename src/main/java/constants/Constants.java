@@ -83,4 +83,12 @@ public final class Constants {
 		return cartas;
 	}
 	
+	public static String getValueCardByIndex(int index) {
+		return VALORES.get(index);
+	}
+	
+	public static Integer getIndexCardByValue(String valor) {
+		return VALORES.indexOf(valor);
+	}
+	
 }
