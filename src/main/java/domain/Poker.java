@@ -55,6 +55,10 @@ public class Poker {
 			return validatePoker(handPlayer1, handPlayer2);
 		}
 		
+		if(TipoMano.ESCALERA_COLOR.getValor() == validateMayorHand(handPlayer1, handPlayer2)) {
+			return validateStairColor(handPlayer1, handPlayer2);
+		}
+		
 		return null;
 	}
 
@@ -166,7 +170,7 @@ public class Poker {
 	}
 	
 		
-	private Ganador validateStair(Mano handPlayer1, Mano handPlayer2) throws ExceptionValidationPoker {
+	private Ganador validateStair(Mano handPlayer1, Mano handPlayer2){
 		
 		final int beginStairPlayer1 = PokerValidations.getCorrectSequence(handPlayer1.getCartas());
 		final int beginStairPlayer2 = PokerValidations.getCorrectSequence(handPlayer2.getCartas());
@@ -252,6 +256,29 @@ public class Poker {
 		}
 		if(valueCardPokerPlayer1 == valueCardPokerPlayer2) {
 			// TODO validacion desempate del poker
+		}
+		
+		return null;
+	}
+	
+	private Ganador validateStairColor(Mano handPlayer1, Mano handPlayer2) {
+		
+		final boolean sameColorPlayer1 = PokerValidations.allSameColor(handPlayer1.getCartas());
+		final boolean sameColorPlayer2 = PokerValidations.allSameColor(handPlayer2.getCartas());
+		
+		final int beginStairPlayer1 = PokerValidations.getCorrectSequence(handPlayer1.getCartas());
+		final int beginStairPlayer2 = PokerValidations.getCorrectSequence(handPlayer2.getCartas());
+		
+		String colorGanador = "Gana la escalera de: ";
+		
+		if ((beginStairPlayer1 > beginStairPlayer2) && sameColorPlayer1) {
+			return new Ganador(colorGanador + (handPlayer1.getCartas().get(0).getPalo().getNombre()), TipoMano.ESCALERA_COLOR);
+		}
+		if ((beginStairPlayer1 < beginStairPlayer2) && sameColorPlayer2) {
+			return new Ganador(colorGanador + (handPlayer2.getCartas().get(0).getPalo().getNombre()), TipoMano.ESCALERA_COLOR);
+		}
+		if((beginStairPlayer1 == beginStairPlayer2) && (sameColorPlayer1 && sameColorPlayer2)) {
+			// TODO validacion desempate de la escalera de color
 		}
 		
 		return null;

@@ -62,13 +62,13 @@ public final class PokerValidations {
 		return indexFirstCard;
 	}
 
-	public static boolean allSameColor(List<Carta> cartas) {
+	public static boolean allSameColor(List<Carta> cards) {
 
 		boolean allHaveSameColor = true;
 
-		final Palo colorMazo = cartas.get(0).getPalo();
+		final Palo colorMazo = cards.get(0).getPalo();
 
-		for (Carta card : cartas) {
+		for (Carta card : cards) {
 			if (!colorMazo.equals(card.getPalo())) {
 				allHaveSameColor = false;
 				break;
