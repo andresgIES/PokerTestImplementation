@@ -35,73 +35,11 @@ public final class PokerValidations {
 	}
 
 	public static final String getValueCardPar(List<Carta> cards) {
-
-		String valueCardPar = STRING_EMPTY;
-
-		for (Carta carta : cards) {
-
-			final String valueCard = carta.getValor();
-			int equalValorPar = 0;
-
-			for (Carta card : cards) {
-				if (card.getValor().equals(valueCard)) {
-					equalValorPar++;
-				}
-			}
-
-			if (equalValorPar == PAR) {
-				valueCardPar = valueCard;
-			}
-
-		}
-		return valueCardPar;
-	}
-
-	public static final String getCartaDoublePair(List<Carta> cards) {
-
-		String cardDoublePar = STRING_EMPTY;
-
-		for (Carta carta : cards) {
-
-			final String valueCard = carta.getValor();
-			int equalValorPar = 0;
-
-			for (Carta card : cards) {
-				if (card.getValor().equals(valueCard)) {
-					equalValorPar++;
-				}
-			}
-
-			if (equalValorPar == PAR) {
-				cardDoublePar = valueCard;
-				break;
-			}
-
-		}
-		return cardDoublePar;
+		return getValueEqualCardAsString(cards, PAR);
 	}
 
 	public static final int getValueTerna(List<Carta> cartas) {
-
-		int valueCardTerna = INDEX_NOT_FOUND;
-
-		for (Carta carta : cartas) {
-
-			final String valueCard = carta.getValor();
-			int equalValorTerna = 0;
-
-			for (Carta card : cartas) {
-				if (card.getValor().equals(valueCard)) {
-					equalValorTerna++;
-				}
-			}
-
-			if (equalValorTerna == TERNA) {
-				valueCardTerna = getIndexCardByValue(valueCard);
-				break;
-			}
-		}
-		return valueCardTerna;
+		return getValueEqualCard(cartas, TERNA);
 	}
 
 	public static final int getCorrectSequence(List<Carta> hand){
@@ -144,26 +82,54 @@ public final class PokerValidations {
 	}
 	
 	public static final int getValuePoker(List<Carta> cards) {
+		return getValueEqualCard(cards, POKER);
+	}
 
-		int valueCardPoker = INDEX_NOT_FOUND;
+	private static int getValueEqualCard(List<Carta> cards, int repetitions) {
+		
+		int indexOfCard = INDEX_NOT_FOUND;
 
 		for (Carta carta : cards) {
 
 			final String valueCard = carta.getValor();
-			int equalValorTerna = 0;
+			int contadorEqualCard = 0;
 
 			for (Carta card : cards) {
 				if (card.getValor().equals(valueCard)) {
-					equalValorTerna++;
+					contadorEqualCard++;
 				}
 			}
 
-			if (equalValorTerna == POKER) {
-				valueCardPoker = getIndexCardByValue(valueCard);
+			if (contadorEqualCard == repetitions) {
+				indexOfCard = getIndexCardByValue(valueCard);
 				break;
 			}
 		}
-		return valueCardPoker;
+		return indexOfCard;
+	}
+	
+	private static String getValueEqualCardAsString(List<Carta> cards, int repetitions) {
+		
+		String cardValueString = STRING_EMPTY;
+
+		for (Carta carta : cards) {
+
+			final String valueCard = carta.getValor();
+			int equalRepetitions = 0;
+
+			for (Carta card : cards) {
+				if (card.getValor().equals(valueCard)) {
+					equalRepetitions++;
+				}
+			}
+
+			if (equalRepetitions == repetitions) {
+				cardValueString = valueCard;
+				break;
+			}
+
+		}
+		return cardValueString;
 	}
 
 }
