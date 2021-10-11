@@ -51,6 +51,10 @@ public class Poker {
 			return validateFullHouse(handPlayer1, handPlayer2);
 		}
 		
+		if(TipoMano.POKER.getValor() == validateMayorHand(handPlayer1, handPlayer2)) {
+			return validatePoker(handPlayer1, handPlayer2);
+		}
+		
 		return null;
 	}
 
@@ -230,6 +234,24 @@ public class Poker {
 		if (PokerValidations.isTernaInFullHouse(handPlayer2)) {
 			valueTernaPlayer2 = PokerValidations.getValueTerna(handPlayer2.getCartas());
 			return new Ganador(getValueCardByIndex(valueTernaPlayer2), TipoMano.FULL_HOUSE);
+		}
+		
+		return null;
+	}
+	
+	private Ganador validatePoker(Mano handPlayer1, Mano handPlayer2) {
+		
+		final int valueCardPokerPlayer1 = PokerValidations.getValuePoker(handPlayer1.getCartas());
+		final int valueCardPokerPlayer2 = PokerValidations.getValuePoker(handPlayer2.getCartas());
+		
+		if (valueCardPokerPlayer1 > valueCardPokerPlayer2) {
+			return new Ganador(getValueCardByIndex(valueCardPokerPlayer1), TipoMano.POKER);
+		}
+		if (valueCardPokerPlayer1 < valueCardPokerPlayer2) {
+			return new Ganador(getValueCardByIndex(valueCardPokerPlayer2), TipoMano.POKER);
+		}
+		if(valueCardPokerPlayer1 == valueCardPokerPlayer2) {
+			// TODO validacion desempate del poker
 		}
 		
 		return null;

@@ -15,6 +15,7 @@ public final class PokerValidations {
 
 	private static final int PAR = 2;
 	private static final int TERNA = 3;
+	private static final int POKER = 4;
 
 	private PokerValidations() {
 		super();
@@ -139,7 +140,30 @@ public final class PokerValidations {
 	}
 
 	public static final boolean isTernaInFullHouse(Mano handPlayer){
-		return !(INDEX_NOT_FOUND == getValueTerna(handPlayer.getCartas())); 
+		return INDEX_NOT_FOUND != getValueTerna(handPlayer.getCartas()); 
+	}
+	
+	public static final int getValuePoker(List<Carta> cards) {
+
+		int valueCardPoker = INDEX_NOT_FOUND;
+
+		for (Carta carta : cards) {
+
+			final String valueCard = carta.getValor();
+			int equalValorTerna = 0;
+
+			for (Carta card : cards) {
+				if (card.getValor().equals(valueCard)) {
+					equalValorTerna++;
+				}
+			}
+
+			if (equalValorTerna == POKER) {
+				valueCardPoker = getIndexCardByValue(valueCard);
+				break;
+			}
+		}
+		return valueCardPoker;
 	}
 
 }
