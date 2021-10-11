@@ -2,7 +2,6 @@ import static constants.Constants.CARTAS;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -418,23 +417,49 @@ class PokerTest {
     	
     	// then 
     	final String expectedMessageWinner = "Gana la escalera de: Treboles";
-    	assertEquals(expectedMessageWinner, actualCardsWinner.getCartaGanadora());    }
+    	assertEquals(expectedMessageWinner, actualCardsWinner.getCartaGanadora());    
+    	
+    }
 
 
-    /* escalera real
+    // escalera real
     @DisplayName("Blanco: 10H JH QH KH AH  Negro: 2C 3H 4S 8C AH Blanco gana. - con Escalera Real: Corazon ")
     @Test
-    void testEscaleraReal() {
-        fail("no implementado");
+    void testEscaleraReal() throws ExceptionValidationPoker {   
+    	
+    	// given
+    	final Poker juego = new Poker();
+    	    	
+    	final Mano handPlayerWhite = new Mano(getCardsFromString("10H JH QH KH AH"), TipoMano.ESCALERA_REAL);
+    	
+    	final Mano handPlayerBlack = new Mano(getCardsFromString("2C 3H 4S 8C AH"), TipoMano.ESCALERA_REAL);
+
+    	// when
+    	final Ganador actualCardsWinner = juego.getValidationByMayorHand(handPlayerWhite, handPlayerBlack);
+    	
+    	// then 
+    	final String expectedMessageWinner = "Gana la escalera real de: Corazones";
+    	assertEquals(expectedMessageWinner, actualCardsWinner.getCartaGanadora());
     }
 
     @DisplayName("Blanco: 2H 3D 5S 8C KD  Negro: 10C JC QC KC AC Negro gana. - con Escalera Real: Trebol")
     @Test
-    void testEscaleraReal2() {
-        fail("no implementado");
+    void testEscaleraReal2() throws ExceptionValidationPoker {    	
+    	
+    	// given
+    	final Poker juego = new Poker();
+    	    	
+    	final Mano handPlayerWhite = new Mano(getCardsFromString("2H 3D 5S 8C KD"), TipoMano.ESCALERA_REAL);
+    	
+    	final Mano handPlayerBlack = new Mano(getCardsFromString("10C JC QC KC AC"), TipoMano.ESCALERA_REAL);
+
+    	// when
+    	final Ganador actualCardsWinner = juego.getValidationByMayorHand(handPlayerWhite, handPlayerBlack);
+    	
+    	// then 
+    	final String expectedMessageWinner = "Gana la escalera real de: Treboles";
+    	assertEquals(expectedMessageWinner, actualCardsWinner.getCartaGanadora());
     }
-    
-    */
     
     private List<Carta> getCardsFromString (String cartas){
     	

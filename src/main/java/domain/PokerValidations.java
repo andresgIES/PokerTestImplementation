@@ -16,6 +16,7 @@ public final class PokerValidations {
 	private static final int PAR = 2;
 	private static final int TERNA = 3;
 	private static final int POKER = 4;
+	private static final int INDICE_CARTA_10 = 8;
 
 	private PokerValidations() {
 		super();
@@ -42,7 +43,7 @@ public final class PokerValidations {
 		return getValueEqualCard(cartas, TERNA);
 	}
 
-	public static final int getCorrectSequence(List<Carta> hand){
+	public static final int getCorrectStair(List<Carta> hand){
 
 		int indexFirstCard = INDEX_NOT_FOUND;
 
@@ -81,8 +82,12 @@ public final class PokerValidations {
 		return INDEX_NOT_FOUND != getValueTerna(handPlayer.getCartas()); 
 	}
 	
-	public static final int getValuePoker(List<Carta> cards) {
+	public static final int getValuePoker(List<Carta> cards){
 		return getValueEqualCard(cards, POKER);
+	}
+	
+	public static final boolean isFirstCardTen(int valueFirstPosition){
+		return INDICE_CARTA_10 == valueFirstPosition;
 	}
 
 	private static int getValueEqualCard(List<Carta> cards, int repetitions) {
