@@ -118,13 +118,13 @@ public class Poker {
 	
 	private Ganador validateDoblePar(Mano handPlayer1, Mano handPlayer2) {
 				
-		final String firstParPlayer1 = PokerValidations.getCartaDoublePair(handPlayer1.getCartas());
+		final String firstParPlayer1 = PokerValidations.getValueCardPar(handPlayer1.getCartas());
 		final List<Carta> cardsPlayer1Filtred = getNewListWithOutSpecificCard(handPlayer1.getCartas(), firstParPlayer1);
-		final String secondParPlayer1 = PokerValidations.getCartaDoublePair(cardsPlayer1Filtred);
+		final String secondParPlayer1 = PokerValidations.getValueCardPar(cardsPlayer1Filtred);
 		
-		final String firstParPlayer2 = PokerValidations.getCartaDoublePair(handPlayer2.getCartas());
+		final String firstParPlayer2 = PokerValidations.getValueCardPar(handPlayer2.getCartas());
 		final List<Carta> cardsPlayer2Filtred = getNewListWithOutSpecificCard(handPlayer2.getCartas(), firstParPlayer2);
-		final String secondParPlayer2 = PokerValidations.getCartaDoublePair(cardsPlayer2Filtred);
+		final String secondParPlayer2 = PokerValidations.getValueCardPar(cardsPlayer2Filtred);
 		
 		final boolean noBlankParsPlayer1 = !firstParPlayer1.isBlank() && !secondParPlayer1.isBlank();
 		final boolean noBlankParsPlayer2 = !firstParPlayer2.isBlank() && !secondParPlayer2.isBlank();
