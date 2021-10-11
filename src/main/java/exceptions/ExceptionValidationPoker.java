@@ -5,10 +5,6 @@ public class ExceptionValidationPoker extends Exception {
 	private static final long serialVersionUID = 5875555006895843062L;
 
 	public static final String HAND_INVALID = "mano invalida";
-
-	public static final String INVALID_STAIR = "escalera invalida";
-	
-	public static final String INVALID_TERNA_FULL_HOUSE = "terna invalida";
 	
 	public ExceptionValidationPoker(String s) {
 		super(s);

@@ -203,31 +203,35 @@ public class Poker {
 	private Ganador validateFullHouse(Mano handPlayer1, Mano handPlayer2) throws ExceptionValidationPoker {
 		
 		int valueTernaPlayer1 = 0;
-		
 		int valueTernaPlayer2 = 0;
 		
-		try {
-			valueTernaPlayer1 = PokerValidations.isTernaInFullHouse(handPlayer1) ? PokerValidations.getValueTerna(handPlayer1.getCartas()) : 0;
-		} catch (Exception e) {
+		if (PokerValidations.isTernaInFullHouse(handPlayer1) && PokerValidations.isTernaInFullHouse(handPlayer2)) {
+			
+			valueTernaPlayer1 = PokerValidations.getValueTerna(handPlayer1.getCartas());
+			valueTernaPlayer2 = PokerValidations.getValueTerna(handPlayer2.getCartas());
+			
+			if(valueTernaPlayer1 > valueTernaPlayer2) {
+				return new Ganador(getValueCardByIndex(valueTernaPlayer1), TipoMano.FULL_HOUSE);
+			}
+			if(valueTernaPlayer1 < valueTernaPlayer2) {
+				return new Ganador(getValueCardByIndex(valueTernaPlayer2), TipoMano.FULL_HOUSE);
+			}
+			if(valueTernaPlayer1 == valueTernaPlayer2) {
+				// TODO implementar desempate full house
+			}
+			
+		}
+		
+		if (PokerValidations.isTernaInFullHouse(handPlayer1)) {
+			valueTernaPlayer1 = PokerValidations.getValueTerna(handPlayer1.getCartas());
+			return new Ganador(getValueCardByIndex(valueTernaPlayer1), TipoMano.FULL_HOUSE);
+		}
+		
+		if (PokerValidations.isTernaInFullHouse(handPlayer2)) {
+			valueTernaPlayer2 = PokerValidations.getValueTerna(handPlayer2.getCartas());
 			return new Ganador(getValueCardByIndex(valueTernaPlayer2), TipoMano.FULL_HOUSE);
 		}
 		
-		try {
-			valueTernaPlayer2 = PokerValidations.isTernaInFullHouse(handPlayer2) ? PokerValidations.getValueTerna(handPlayer2.getCartas()) : 0;
-		} catch (Exception e) {
-			return new Ganador(getValueCardByIndex(valueTernaPlayer1), TipoMano.FULL_HOUSE);
-		}
-				
-		if(valueTernaPlayer1 > valueTernaPlayer2) {
-			return new Ganador(getValueCardByIndex(valueTernaPlayer1), TipoMano.FULL_HOUSE);
-		}
-		if(valueTernaPlayer1 < valueTernaPlayer2) {
-			return new Ganador(getValueCardByIndex(valueTernaPlayer2), TipoMano.FULL_HOUSE);
-		}
-		if(valueTernaPlayer1 == valueTernaPlayer2) {
-			// TODO implementar desempate full house
-		}
-
 		return null;
 	}
 	

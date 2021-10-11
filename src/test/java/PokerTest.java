@@ -340,7 +340,7 @@ class PokerTest {
     	final Ganador actualCardsWinner = juego.getValidationByMayorHand(handPlayerWhite, handPlayerBlack);
     	
     	// then 
-    	assertEquals(VALOR_K, actualCardsWinner.getCartaGanadora());
+    	assertEquals(VALOR_2, actualCardsWinner.getCartaGanadora());
     }
 
     /* poker

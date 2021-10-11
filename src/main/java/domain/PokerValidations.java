@@ -10,13 +10,11 @@ import java.util.Comparator;
 import java.util.List;
 
 import enums.Palo;
-import exceptions.ExceptionValidationPoker;
 
 public final class PokerValidations {
 
 	private static final int PAR = 2;
 	private static final int TERNA = 3;
-	private static final int INDICE_CARTA_10 = 8;
 
 	private PokerValidations() {
 		super();
@@ -105,7 +103,7 @@ public final class PokerValidations {
 		return valueCardTerna;
 	}
 
-	public static final int getCorrectSequence(List<Carta> hand) throws ExceptionValidationPoker {
+	public static final int getCorrectSequence(List<Carta> hand){
 
 		int indexFirstCard = INDEX_NOT_FOUND;
 
@@ -114,10 +112,6 @@ public final class PokerValidations {
 		Collections.sort(hand, compareByValue);
 
 		int firstPosition = getIndexCardByValue(hand.get(0).getValor());
-
-		if (firstPosition >= INDICE_CARTA_10) {
-			throw new ExceptionValidationPoker(ExceptionValidationPoker.INVALID_STAIR);
-		}
 
 		if (getValueCardByIndex(firstPosition + 1).equals(hand.get(1).getValor())
 				&& getValueCardByIndex(firstPosition + 2).equals(hand.get(2).getValor())
@@ -144,13 +138,8 @@ public final class PokerValidations {
 		return allHaveSameColor;
 	}
 
-	public static final boolean isTernaInFullHouse(Mano handPlayer) throws ExceptionValidationPoker {
-		if(INDEX_NOT_FOUND == getValueTerna(handPlayer.getCartas())) {
-			throw new ExceptionValidationPoker(ExceptionValidationPoker.INVALID_TERNA_FULL_HOUSE);
-		}
-		else {
-			return true;
-		}
+	public static final boolean isTernaInFullHouse(Mano handPlayer){
+		return !(INDEX_NOT_FOUND == getValueTerna(handPlayer.getCartas())); 
 	}
 
 }
