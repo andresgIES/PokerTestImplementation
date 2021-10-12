@@ -17,9 +17,7 @@ public final class Constants {
 	public static final int SIZE_HAND = 5;
 	
 	public static final int INDEX_NOT_FOUND = -1;
-	
-	public static final String STRING_EMPTY = "";
-	
+		
 	public static final List<String> VALORES = Arrays.asList("2","3","4","5","6","7","8","9","10","J","K","Q","A");
 	
 	public static final Map<String, Carta> CARTAS = getCartas();
@@ -93,6 +91,10 @@ public final class Constants {
 	
 	public static Integer getIndexCardByValue(String valor) {
 		return VALORES.indexOf(valor);
+	}
+	
+	public static boolean isNotIndexNotFound (int index) {
+		return INDEX_NOT_FOUND != index;
 	}
 	
 }

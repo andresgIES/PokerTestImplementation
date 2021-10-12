@@ -2,9 +2,9 @@ package domain;
 
 import static constants.Constants.SIZE_HAND;
 import static constants.Constants.getValueCardByIndex;
+import static constants.Constants.isNotIndexNotFound;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 import enums.TipoMano;
@@ -99,26 +99,29 @@ public class Poker {
 	
 	private Ganador validatePar(Mano handPlayer1, Mano handPlayer2){
 		
-		final String valueParPlayer1 = PokerValidations.getValueCardPar(handPlayer1.getCartas());
-		final String valueParPlayer2 = PokerValidations.getValueCardPar(handPlayer2.getCartas());
-		
-		if(valueParPlayer1.isEmpty()) {
-			return new Ganador(valueParPlayer2, TipoMano.PAR);
+		final int valueParPlayer1 = PokerValidations.getValueCardPar(handPlayer1.getCartas());
+		final int valueParPlayer2 = PokerValidations.getValueCardPar(handPlayer2.getCartas());
+				
+		if((valueParPlayer1 > valueParPlayer2) && isNotIndexNotFound(valueParPlayer1)) {
+			return new Ganador(getValueCardByIndex(valueParPlayer1), TipoMano.PAR);
 		}
-		if(valueParPlayer2.isEmpty()) {
-			return new Ganador(valueParPlayer1, TipoMano.PAR);
+		if((valueParPlayer1 < valueParPlayer2) && isNotIndexNotFound(valueParPlayer2)) {
+			return new Ganador(getValueCardByIndex(valueParPlayer2), TipoMano.PAR);
 		}
-		if(valueParPlayer1.equals(valueParPlayer2)) {
+		if(valueParPlayer1 == valueParPlayer2) {
 			// TODO implementar desempate de acuerdo a las demas cartas
 		}
 
 		return null;
 	}
 	
-	private List<Carta> getNewListWithOutSpecificCard(List<Carta> playerCards, final String cardToRemove) {
-		if(Objects.nonNull(cardToRemove)) {
+	private List<Carta> getNewListWithOutSpecificCard(List<Carta> playerCards, final int cardToRemove) {
+		if(!isNotIndexNotFound(cardToRemove)) {
+			return playerCards;
+		}
+		else {
 			playerCards = playerCards.stream().filter(carta -> 
-			!carta.getValor().equals(cardToRemove))
+			!carta.getValor().equals(getValueCardByIndex(cardToRemove)))
 			.collect(Collectors.toList());
 		}
 		return playerCards;
@@ -126,29 +129,31 @@ public class Poker {
 	
 	private Ganador validateDoblePar(Mano handPlayer1, Mano handPlayer2) {
 				
-		final String firstParPlayer1 = PokerValidations.getValueCardPar(handPlayer1.getCartas());
+		final int firstParPlayer1 = PokerValidations.getValueCardPar(handPlayer1.getCartas());
 		final List<Carta> cardsPlayer1Filtred = getNewListWithOutSpecificCard(handPlayer1.getCartas(), firstParPlayer1);
-		final String secondParPlayer1 = PokerValidations.getValueCardPar(cardsPlayer1Filtred);
+		final int secondParPlayer1 = PokerValidations.getValueCardPar(cardsPlayer1Filtred);
 		
-		final String firstParPlayer2 = PokerValidations.getValueCardPar(handPlayer2.getCartas());
+		final int firstParPlayer2 = PokerValidations.getValueCardPar(handPlayer2.getCartas());
 		final List<Carta> cardsPlayer2Filtred = getNewListWithOutSpecificCard(handPlayer2.getCartas(), firstParPlayer2);
-		final String secondParPlayer2 = PokerValidations.getValueCardPar(cardsPlayer2Filtred);
+		final int secondParPlayer2 = PokerValidations.getValueCardPar(cardsPlayer2Filtred);
 		
-		final boolean noBlankParsPlayer1 = !firstParPlayer1.isBlank() && !secondParPlayer1.isBlank();
-		final boolean noBlankParsPlayer2 = !firstParPlayer2.isBlank() && !secondParPlayer2.isBlank();
+		final int bestDoblePairPlayer1 = (firstParPlayer1 > secondParPlayer1) ? firstParPlayer1 : secondParPlayer1;
+		final int bestDoblePairPlayer2 = (firstParPlayer2 > secondParPlayer2) ? firstParPlayer2 : secondParPlayer2;
 		
-		if (noBlankParsPlayer1 && noBlankParsPlayer2){
+		if (bestDoblePairPlayer1 == bestDoblePairPlayer2){
 			// TODO implementar empate de doble par
 			return new Ganador();
 		}
 
-		if (noBlankParsPlayer1) {
-			final String winnerCards = firstParPlayer1.concat(", ").concat(secondParPlayer1);
+		if ((bestDoblePairPlayer1 > bestDoblePairPlayer2) && PokerValidations.validateBothIndex(firstParPlayer1, secondParPlayer1)) {
+			final String winnerCards = 
+					getValueCardByIndex(firstParPlayer1).concat(", ").concat(getValueCardByIndex(secondParPlayer1));
 			return new Ganador(winnerCards, TipoMano.DOBLE_PAR);
 		}
 		
-		if (noBlankParsPlayer2) {
-			final String winnerCards = firstParPlayer2.concat(", ").concat(secondParPlayer2);
+		if (bestDoblePairPlayer1 < bestDoblePairPlayer2 && PokerValidations.validateBothIndex(firstParPlayer2, secondParPlayer2)) {
+			final String winnerCards = 
+					getValueCardByIndex(firstParPlayer2).concat(", ").concat(getValueCardByIndex(secondParPlayer2));
 			return new Ganador(winnerCards, TipoMano.DOBLE_PAR);
 		}
 		
@@ -213,37 +218,20 @@ public class Poker {
 	}
 	
 	private Ganador validateFullHouse(Mano handPlayer1, Mano handPlayer2) {
-		
-		int valueTernaPlayer1 = 0;
-		int valueTernaPlayer2 = 0;
-		
-		if (PokerValidations.isTernaInFullHouse(handPlayer1) && PokerValidations.isTernaInFullHouse(handPlayer2)) {
-			
-			valueTernaPlayer1 = PokerValidations.getValueTerna(handPlayer1.getCartas());
-			valueTernaPlayer2 = PokerValidations.getValueTerna(handPlayer2.getCartas());
-			
-			if(valueTernaPlayer1 > valueTernaPlayer2) {
-				return new Ganador(getValueCardByIndex(valueTernaPlayer1), TipoMano.FULL_HOUSE);
-			}
-			if(valueTernaPlayer1 < valueTernaPlayer2) {
-				return new Ganador(getValueCardByIndex(valueTernaPlayer2), TipoMano.FULL_HOUSE);
-			}
-			if(valueTernaPlayer1 == valueTernaPlayer2) {
-				// TODO implementar desempate full house
-			}
-			
-		}
-		
-		if (PokerValidations.isTernaInFullHouse(handPlayer1)) {
-			valueTernaPlayer1 = PokerValidations.getValueTerna(handPlayer1.getCartas());
+
+		final int valueTernaPlayer1 = PokerValidations.getValueTerna(handPlayer1.getCartas());
+		final int valueTernaPlayer2 = PokerValidations.getValueTerna(handPlayer2.getCartas());
+
+		if(valueTernaPlayer1 > valueTernaPlayer2 && isNotIndexNotFound(valueTernaPlayer1)) {
 			return new Ganador(getValueCardByIndex(valueTernaPlayer1), TipoMano.FULL_HOUSE);
 		}
-		
-		if (PokerValidations.isTernaInFullHouse(handPlayer2)) {
-			valueTernaPlayer2 = PokerValidations.getValueTerna(handPlayer2.getCartas());
+		if(valueTernaPlayer1 < valueTernaPlayer2 && isNotIndexNotFound(valueTernaPlayer2)) {
 			return new Ganador(getValueCardByIndex(valueTernaPlayer2), TipoMano.FULL_HOUSE);
 		}
-		
+		if(valueTernaPlayer1 == valueTernaPlayer2 && PokerValidations.validateBothIndex(valueTernaPlayer1, valueTernaPlayer2)) {
+			// TODO implementar desempate full house
+		}
+
 		return null;
 	}
 	

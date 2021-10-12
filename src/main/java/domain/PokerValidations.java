@@ -1,7 +1,6 @@
 package domain;
 
 import static constants.Constants.INDEX_NOT_FOUND;
-import static constants.Constants.STRING_EMPTY;
 import static constants.Constants.getIndexCardByValue;
 import static constants.Constants.getValueCardByIndex;
 
@@ -22,7 +21,7 @@ public final class PokerValidations {
 		super();
 	}
 
-	public static final int getValueHighCard(List<Carta> cards) {
+	public static int getValueHighCard(List<Carta> cards) {
 
 		int maxValue = 0;
 
@@ -35,15 +34,15 @@ public final class PokerValidations {
 		return maxValue;
 	}
 
-	public static final String getValueCardPar(List<Carta> cards) {
-		return getValueEqualCardAsString(cards, PAR);
+	public static int getValueCardPar(List<Carta> cards) {
+		return getValueEqualCard(cards, PAR);
 	}
 
-	public static final int getValueTerna(List<Carta> cartas) {
+	public static int getValueTerna(List<Carta> cartas) {
 		return getValueEqualCard(cartas, TERNA);
 	}
 
-	public static final int getCorrectStair(List<Carta> hand){
+	public static int getCorrectStair(List<Carta> hand){
 
 		int indexFirstCard = INDEX_NOT_FOUND;
 
@@ -77,17 +76,17 @@ public final class PokerValidations {
 		}
 		return allHaveSameColor;
 	}
-
-	public static final boolean isTernaInFullHouse(Mano handPlayer){
-		return INDEX_NOT_FOUND != getValueTerna(handPlayer.getCartas()); 
-	}
-	
-	public static final int getValuePoker(List<Carta> cards){
+		
+	public static int getValuePoker(List<Carta> cards){
 		return getValueEqualCard(cards, POKER);
 	}
 	
-	public static final boolean isFirstCardTen(int valueFirstPosition){
+	public static boolean isFirstCardTen(int valueFirstPosition){
 		return INDICE_CARTA_10 == valueFirstPosition;
+	}
+		
+	public static boolean validateBothIndex(int indexOfPosition1, int indexOfPosition2){
+		return INDEX_NOT_FOUND != indexOfPosition1 && INDEX_NOT_FOUND != indexOfPosition2;
 	}
 
 	private static int getValueEqualCard(List<Carta> cards, int repetitions) {
@@ -112,29 +111,5 @@ public final class PokerValidations {
 		}
 		return indexOfCard;
 	}
-	
-	private static String getValueEqualCardAsString(List<Carta> cards, int repetitions) {
 		
-		String cardValueString = STRING_EMPTY;
-
-		for (Carta carta : cards) {
-
-			final String valueCard = carta.getValor();
-			int equalRepetitions = 0;
-
-			for (Carta card : cards) {
-				if (card.getValor().equals(valueCard)) {
-					equalRepetitions++;
-				}
-			}
-
-			if (equalRepetitions == repetitions) {
-				cardValueString = valueCard;
-				break;
-			}
-
-		}
-		return cardValueString;
-	}
-
 }
