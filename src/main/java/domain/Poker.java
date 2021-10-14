@@ -221,14 +221,21 @@ public class Poker {
 
 		final int valueTernaPlayer1 = PokerValidations.getValueTerna(handPlayer1.getCartas());
 		final int valueTernaPlayer2 = PokerValidations.getValueTerna(handPlayer2.getCartas());
+		
+		final List<Carta> cardsPlayer1Filtred = getNewListWithOutSpecificCard(handPlayer1.getCartas(), valueTernaPlayer1);
+		final int parPlayer1 = PokerValidations.getValueCardPar(cardsPlayer1Filtred);
+		
+		final List<Carta> cardsPlayer2Filtred = getNewListWithOutSpecificCard(handPlayer2.getCartas(), valueTernaPlayer2);
+		final int parPlayer2 = PokerValidations.getValueCardPar(cardsPlayer2Filtred);
 
-		if(valueTernaPlayer1 > valueTernaPlayer2 && isNotIndexNotFound(valueTernaPlayer1)) {
+		if(valueTernaPlayer1 > valueTernaPlayer2 && PokerValidations.validateBothIndex(valueTernaPlayer1, parPlayer1)) {
 			return new Ganador(getValueCardByIndex(valueTernaPlayer1), TipoMano.FULL_HOUSE);
 		}
-		if(valueTernaPlayer1 < valueTernaPlayer2 && isNotIndexNotFound(valueTernaPlayer2)) {
+		if(valueTernaPlayer1 < valueTernaPlayer2 && PokerValidations.validateBothIndex(valueTernaPlayer2, parPlayer2)) {
 			return new Ganador(getValueCardByIndex(valueTernaPlayer2), TipoMano.FULL_HOUSE);
 		}
-		if(valueTernaPlayer1 == valueTernaPlayer2 && PokerValidations.validateBothIndex(valueTernaPlayer1, valueTernaPlayer2)) {
+		if(valueTernaPlayer1 == valueTernaPlayer2 && PokerValidations.validateBothIndex(valueTernaPlayer1, valueTernaPlayer2)
+				&& PokerValidations.validateBothIndex(parPlayer1, parPlayer2)) {
 			// TODO implementar desempate full house
 		}
 
