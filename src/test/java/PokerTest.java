@@ -21,7 +21,7 @@ class PokerTest {
 	private static final String VALOR_K = "K";
 	private static final String VALOR_A = "A";
 	private static final String VALOR_3 = "3";
-	private static final Object VALOR_2 = "2";
+	private static final String VALOR_2 = "2";
 
     @DisplayName("Blanco: 2H 3D 5S 9C KD  Negro: 2C 3H 4S 8C AH Negro gana. - con la carta alta: As ")
     @Test
@@ -320,7 +320,8 @@ class PokerTest {
     	final Ganador actualCardsWinner = juego.getValidationByMayorHand(handPlayerWhite, handPlayerBlack);
     	
     	// then 
-    	assertEquals(VALOR_K, actualCardsWinner.getCartaGanadora());
+    	final String cartasExpected = VALOR_K.concat(", ").concat(VALOR_2);
+    	assertEquals(cartasExpected, actualCardsWinner.getCartaGanadora());
     	
     }
 
@@ -339,7 +340,8 @@ class PokerTest {
     	final Ganador actualCardsWinner = juego.getValidationByMayorHand(handPlayerWhite, handPlayerBlack);
     	
     	// then 
-    	assertEquals(VALOR_2, actualCardsWinner.getCartaGanadora());
+    	final String cartasExpected = VALOR_2.concat(", ").concat(VALOR_A);
+    	assertEquals(cartasExpected, actualCardsWinner.getCartaGanadora());
     }
 
     // poker

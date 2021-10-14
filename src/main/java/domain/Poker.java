@@ -229,10 +229,12 @@ public class Poker {
 		final int parPlayer2 = PokerValidations.getValueCardPar(cardsPlayer2Filtred);
 
 		if(valueTernaPlayer1 > valueTernaPlayer2 && PokerValidations.validateBothIndex(valueTernaPlayer1, parPlayer1)) {
-			return new Ganador(getValueCardByIndex(valueTernaPlayer1), TipoMano.FULL_HOUSE);
+			final String parAndTernaPlayer1 = getValueCardByIndex(valueTernaPlayer1).concat(", ").concat(getValueCardByIndex(parPlayer1));
+			return new Ganador(parAndTernaPlayer1, TipoMano.FULL_HOUSE);
 		}
 		if(valueTernaPlayer1 < valueTernaPlayer2 && PokerValidations.validateBothIndex(valueTernaPlayer2, parPlayer2)) {
-			return new Ganador(getValueCardByIndex(valueTernaPlayer2), TipoMano.FULL_HOUSE);
+			final String parAndTernaPlayer2 = getValueCardByIndex(valueTernaPlayer2).concat(", ").concat(getValueCardByIndex(parPlayer2));
+			return new Ganador(parAndTernaPlayer2, TipoMano.FULL_HOUSE);
 		}
 		if(valueTernaPlayer1 == valueTernaPlayer2 && PokerValidations.validateBothIndex(valueTernaPlayer1, valueTernaPlayer2)
 				&& PokerValidations.validateBothIndex(parPlayer1, parPlayer2)) {
