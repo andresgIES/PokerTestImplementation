@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -22,14 +23,19 @@ class PokerTest {
 	private static final String VALOR_A = "A";
 	private static final String VALOR_3 = "3";
 	private static final String VALOR_2 = "2";
+	
+	private Poker juego = null; 
+	
+	@BeforeEach
+	public void initPoker(){
+		juego = new Poker();
+	}
 
     @DisplayName("Blanco: 2H 3D 5S 9C KD  Negro: 2C 3H 4S 8C AH Negro gana. - con la carta alta: As ")
     @Test
     void testCartaAlta() throws ExceptionValidationPoker {
     	
-    	// given
-    	final Poker juego = new Poker();
-    	    	
+    	// given    	
     	final Mano handPlayerWhite = new Mano(getCardsFromString("2H 3D 5S 9C KD"), TipoMano.CARTA_ALTA);
     	    	
     	final Mano handPlayerBlack = new Mano(getCardsFromString("2C 3H 4S 8C AH"), TipoMano.CARTA_ALTA);
@@ -47,8 +53,6 @@ class PokerTest {
     void testCartaAlta2() throws ExceptionValidationPoker {    	
     	
     	// given
-    	final Poker juego = new Poker();
-    	
     	final Mano handPlayerWhite = new Mano(getCardsFromString("2H 3D 5S 9C KD "), TipoMano.CARTA_ALTA);
     	    	
     	final Mano handPlayerBlack = new Mano(getCardsFromString("2C 3H 4S 8C 2C"), TipoMano.CARTA_ALTA);
@@ -65,8 +69,6 @@ class PokerTest {
     void testCartaAlta3() {
     	
     	// given
-    	final Poker juego = new Poker();
-    	    	
     	final Mano handPlayerWhite = new Mano(getCardsFromString("2H 3D 5S 8C"), TipoMano.CARTA_ALTA);
     	    	
     	final Mano handPlayerBlack = new Mano(getCardsFromString("2C 3H 4S AC AH"), null);
@@ -90,8 +92,6 @@ class PokerTest {
     void testPar() throws ExceptionValidationPoker {
     	
     	// given
-    	final Poker juego = new Poker();
-    	    	
     	final Mano manoJugadorBlanco = new Mano(getCardsFromString("2H 3D 5S KC KD"), TipoMano.PAR);
     	    	
     	final Mano handPlayerBlack = new Mano(getCardsFromString("2C 3H 4S 8C AH"), TipoMano.CARTA_ALTA);
@@ -109,8 +109,6 @@ class PokerTest {
     void testPar2() throws ExceptionValidationPoker {
     	
     	// given
-    	final Poker juego = new Poker();
-    	    	
     	final Mano handPlayerWhite = new Mano(getCardsFromString("2H 3D 5S 8C KD"), TipoMano.CARTA_ALTA);
     	    	
     	final Mano handPlayerBlack = new Mano(getCardsFromString("2C 3H 4S AC AH"), TipoMano.PAR);
@@ -128,8 +126,6 @@ class PokerTest {
     void testPar3() {
     	
     	// given
-    	final Poker juego = new Poker();
-    	    	
     	final Mano handPlayerWhite = new Mano(getCardsFromString("2H 3D 5S 8C"), TipoMano.CARTA_ALTA);
     	    	
     	final Mano handPlayerBlack = new Mano(getCardsFromString("2C 3H 4S AC AH"), TipoMano.PAR);
@@ -153,8 +149,6 @@ class PokerTest {
     void testDosPares() throws ExceptionValidationPoker {
     	
     	// given
-    	final Poker juego = new Poker();
-
     	final Mano handPlayerWhite = new Mano(getCardsFromString("2H 3D 3S KC KD"), TipoMano.DOBLE_PAR);
     	    	
     	final Mano handPlayerBlack = new Mano(getCardsFromString("2C 3H 4S 8C AH"), TipoMano.DOBLE_PAR);
@@ -172,9 +166,7 @@ class PokerTest {
     @Test
     void testDosPares2() throws ExceptionValidationPoker {    	
     	
-    	// given
-    	final Poker juego = new Poker();
-    	    	
+    	// given	
     	final Mano handPlayerWhite = new Mano(getCardsFromString("2H 3D 5S 8C KD"), TipoMano.DOBLE_PAR);
     	
     	final Mano handPlayerBlack = new Mano(getCardsFromString("2C 3H 3S AC AH"), TipoMano.DOBLE_PAR);
@@ -194,8 +186,6 @@ class PokerTest {
     void testTerna() throws ExceptionValidationPoker {
     	
     	// given
-    	final Poker juego = new Poker();
-    	    	
     	final Mano handPlayerWhite = new Mano(getCardsFromString("2H 3D KS KC KD"), TipoMano.TERNA);
     	
     	final Mano handPlayerBlack = new Mano(getCardsFromString("2C 3H 4S 8C AH"), TipoMano.TERNA);
@@ -212,8 +202,6 @@ class PokerTest {
     void testTerna2() throws ExceptionValidationPoker {
     	
     	// given
-    	final Poker juego = new Poker();
-    	    	
     	final Mano handPlayerWhite = new Mano(getCardsFromString("2H 3D 5S 8C KD"), TipoMano.TERNA);
     	
     	final Mano handPlayerBlack = new Mano(getCardsFromString("2C 3H AS AC AH"), TipoMano.TERNA);
@@ -232,8 +220,6 @@ class PokerTest {
     void testEscalera() throws ExceptionValidationPoker {    	
     	
     	// given
-    	final Poker juego = new Poker();
-    	    	
     	final Mano handPlayerWhite = new Mano(getCardsFromString("2H 3D 4S 5C 6D"), TipoMano.ESCALERA);
     	
     	final Mano handPlayerBlack = new Mano(getCardsFromString("2C 3H 4S 8C AH"), TipoMano.ESCALERA);
@@ -250,9 +236,7 @@ class PokerTest {
     @Test
     void testEscalera2() throws ExceptionValidationPoker {
 
-    	// given
-    	final Poker juego = new Poker();
-    	    	
+    	// given	
     	final Mano handPlayerWhite = new Mano(getCardsFromString("2H 3D 5S 8C KD"), TipoMano.ESCALERA);
     	
     	final Mano handPlayerBlack = new Mano(getCardsFromString("2C 3H 4S 5C 6H"), TipoMano.ESCALERA);
@@ -271,8 +255,6 @@ class PokerTest {
     void testColor() throws ExceptionValidationPoker {
     	
     	// given
-    	final Poker juego = new Poker();
-    	    	
     	final Mano handPlayerWhite = new Mano(getCardsFromString("2H 3H 5H KH 8H"), TipoMano.COLOR);
     	
     	final Mano handPlayerBlack = new Mano(getCardsFromString("2C 3H 4S 8C AH"), TipoMano.COLOR);
@@ -289,9 +271,7 @@ class PokerTest {
     @Test
     void testColor2() throws ExceptionValidationPoker {
     	
-    	// given
-    	final Poker juego = new Poker();
-    	    	
+    	// given	
     	final Mano handPlayerWhite = new Mano(getCardsFromString("2H 3D 5S 8C KD"), TipoMano.COLOR);
     	
     	final Mano handPlayerBlack = new Mano(getCardsFromString("2C 3C 4C AC QC"), TipoMano.COLOR);
@@ -310,8 +290,6 @@ class PokerTest {
     void testFullHouse() throws ExceptionValidationPoker {
     	
     	// given
-    	final Poker juego = new Poker();
-    	    	
     	final Mano handPlayerWhite = new Mano(getCardsFromString("2H 2D KS KC KD"), TipoMano.FULL_HOUSE);
     	
     	final Mano handPlayerBlack = new Mano(getCardsFromString("2C 3H 4S 8C AH"), TipoMano.FULL_HOUSE);
@@ -329,9 +307,7 @@ class PokerTest {
     @Test
     void testFullHouse2() throws ExceptionValidationPoker {
     	
-    	// given
-    	final Poker juego = new Poker();
-    	    	
+    	// given	
     	final Mano handPlayerWhite = new Mano(getCardsFromString("2H 3D 5S 8C KD"), TipoMano.FULL_HOUSE);
     	
     	final Mano handPlayerBlack = new Mano(getCardsFromString("2C 2H 2S AC AH"), TipoMano.FULL_HOUSE);
@@ -349,9 +325,7 @@ class PokerTest {
     @Test
     void testPoker() throws ExceptionValidationPoker {
     	
-    	// given
-    	final Poker juego = new Poker();
-    	    	
+    	// given	
     	final Mano handPlayerWhite = new Mano(getCardsFromString("2H 2D 2S 2C KD"), TipoMano.POKER);
     	
     	final Mano handPlayerBlack = new Mano(getCardsFromString("2C 3H 4S 8C AH"), TipoMano.POKER);
@@ -367,9 +341,7 @@ class PokerTest {
     @Test
     void testPoker2() throws ExceptionValidationPoker {  
     	
-    	// given
-    	final Poker juego = new Poker();
-    	    	
+    	// given	
     	final Mano handPlayerWhite = new Mano(getCardsFromString("2H 3D 5S 8C KD"), TipoMano.POKER);
     	
     	final Mano handPlayerBlack = new Mano(getCardsFromString("2C 2H 2S 2D KH"), TipoMano.POKER);
@@ -387,9 +359,7 @@ class PokerTest {
     @Test
     void testEscaleraColor() throws ExceptionValidationPoker {
     	
-    	// given
-    	final Poker juego = new Poker();
-    	    	
+    	// given 	
     	final Mano handPlayerWhite = new Mano(getCardsFromString("2H 3H 4H 5H 6H"), TipoMano.ESCALERA_COLOR);
     	
     	final Mano handPlayerBlack = new Mano(getCardsFromString("2C 3H 4S 8C AH"), TipoMano.ESCALERA_COLOR);
@@ -407,9 +377,7 @@ class PokerTest {
     @Test
     void testEscaleraColor2() throws ExceptionValidationPoker {    
     	
-    	// given
-    	final Poker juego = new Poker();
-    	    	
+    	// given  	
     	final Mano handPlayerWhite = new Mano(getCardsFromString("2H 3D 5S 8C KD"), TipoMano.ESCALERA_COLOR);
     	
     	final Mano handPlayerBlack = new Mano(getCardsFromString("2C 3C 4C 5C 6C"), TipoMano.ESCALERA_COLOR);
@@ -429,9 +397,7 @@ class PokerTest {
     @Test
     void testEscaleraReal() throws ExceptionValidationPoker {   
     	
-    	// given
-    	final Poker juego = new Poker();
-    	    	
+    	// given	
     	final Mano handPlayerWhite = new Mano(getCardsFromString("10H JH QH KH AH"), TipoMano.ESCALERA_REAL);
     	
     	final Mano handPlayerBlack = new Mano(getCardsFromString("2C 3H 4S 8C AH"), TipoMano.ESCALERA_REAL);
@@ -448,9 +414,7 @@ class PokerTest {
     @Test
     void testEscaleraReal2() throws ExceptionValidationPoker {    	
     	
-    	// given
-    	final Poker juego = new Poker();
-    	    	
+    	// given	
     	final Mano handPlayerWhite = new Mano(getCardsFromString("2H 3D 5S 8C KD"), TipoMano.ESCALERA_REAL);
     	
     	final Mano handPlayerBlack = new Mano(getCardsFromString("10C JC QC KC AC"), TipoMano.ESCALERA_REAL);
