@@ -141,6 +141,23 @@ class PokerTest {
 
         assertTrue(actualMessage.contains(expectedMessage));
     }
+    
+    @DisplayName("Blanco: 2H 2D 5S 8C KD  Negro: 2C 2H 4S JC AH Negro gana. - con carta alta As")
+    @Test
+    void testPar4() throws ExceptionValidationPoker {
+    	
+    	// given
+    	final Mano handPlayerWhite = new Mano(getCardsFromString("2H 2D 5S 8C KD"), TipoMano.PAR);
+    	    	
+    	final Mano handPlayerBlack = new Mano(getCardsFromString("2C 2H 4S JC AH"), TipoMano.PAR);
+
+    	// when
+    	final Ganador actualCardWinner = juego.getValidationByMayorHand(handPlayerWhite, handPlayerBlack);
+    	
+    	// then
+    	assertEquals(VALOR_A, actualCardWinner.getCartaGanadora());
+
+    }
 
     //dos pares
     
@@ -168,6 +185,23 @@ class PokerTest {
     	
     	// given	
     	final Mano handPlayerWhite = new Mano(getCardsFromString("2H 3D 5S 8C KD"), TipoMano.DOBLE_PAR);
+    	
+    	final Mano handPlayerBlack = new Mano(getCardsFromString("2C 3H 3S AC AH"), TipoMano.DOBLE_PAR);
+
+    	// when
+    	final Ganador actualCardsWinner = juego.getValidationByMayorHand(handPlayerWhite, handPlayerBlack);
+    	
+    	// then 
+    	final String cartasExpected = VALOR_3.concat(", ").concat(VALOR_A);
+    	assertEquals(cartasExpected, actualCardsWinner.getCartaGanadora());
+    }
+    
+    @DisplayName("Blanco: 3H 3D 5S 5C KD  Negro: 2C 3H 3S AC AH Negro gana. - empate de dos pares: gana As y Tres ")
+    @Test
+    void testDosPares3() throws ExceptionValidationPoker {    	
+    	
+    	// given	
+    	final Mano handPlayerWhite = new Mano(getCardsFromString("3H 3D 5S 5C KD"), TipoMano.DOBLE_PAR);
     	
     	final Mano handPlayerBlack = new Mano(getCardsFromString("2C 3H 3S AC AH"), TipoMano.DOBLE_PAR);
 

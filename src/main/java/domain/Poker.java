@@ -109,7 +109,7 @@ public class Poker {
 			return new Ganador(getValueCardByIndex(valueParPlayer2), TipoMano.PAR);
 		}
 		if(valueParPlayer1 == valueParPlayer2) {
-			// TODO implementar desempate de acuerdo a las demas cartas
+			return validateHighCard(handPlayer1, handPlayer2);
 		}
 
 		return null;
@@ -140,24 +140,39 @@ public class Poker {
 		final int bestDoblePairPlayer1 = (firstParPlayer1 > secondParPlayer1) ? firstParPlayer1 : secondParPlayer1;
 		final int bestDoblePairPlayer2 = (firstParPlayer2 > secondParPlayer2) ? firstParPlayer2 : secondParPlayer2;
 		
-		if (bestDoblePairPlayer1 == bestDoblePairPlayer2){
-			// TODO implementar empate de doble par
-			return new Ganador();
+		if (bestDoblePairPlayer1 == bestDoblePairPlayer2 && PokerValidations.validateBothIndex(bestDoblePairPlayer1, bestDoblePairPlayer2)){
+			
+			final int secondDoblePairPlayer1 = (firstParPlayer1 == bestDoblePairPlayer1) ? secondParPlayer1 : firstParPlayer1;
+			final int secondDoblePairPlayer2 = (firstParPlayer2 == bestDoblePairPlayer2) ? secondParPlayer2 : firstParPlayer2;
+
+			if ((secondDoblePairPlayer1 > secondDoblePairPlayer2) && PokerValidations.validateBothIndex(secondDoblePairPlayer1, secondDoblePairPlayer2)) {
+				return getWinnerWith2Cards(firstParPlayer1, secondParPlayer1, TipoMano.DOBLE_PAR);
+			}
+			
+			if ((secondDoblePairPlayer2 > secondDoblePairPlayer1) && PokerValidations.validateBothIndex(secondDoblePairPlayer1, secondDoblePairPlayer2)) {
+				return getWinnerWith2Cards(firstParPlayer2, secondParPlayer2, TipoMano.DOBLE_PAR);
+			}
+			
+			if (secondDoblePairPlayer1 == secondDoblePairPlayer2 && PokerValidations.validateBothIndex(secondDoblePairPlayer1, secondDoblePairPlayer2)) {
+				
+			}
+			
 		}
 
 		if ((bestDoblePairPlayer1 > bestDoblePairPlayer2) && PokerValidations.validateBothIndex(firstParPlayer1, secondParPlayer1)) {
-			final String winnerCards = 
-					getValueCardByIndex(firstParPlayer1).concat(", ").concat(getValueCardByIndex(secondParPlayer1));
-			return new Ganador(winnerCards, TipoMano.DOBLE_PAR);
+			return getWinnerWith2Cards(firstParPlayer1, secondParPlayer1, TipoMano.DOBLE_PAR);
 		}
 		
 		if (bestDoblePairPlayer1 < bestDoblePairPlayer2 && PokerValidations.validateBothIndex(firstParPlayer2, secondParPlayer2)) {
-			final String winnerCards = 
-					getValueCardByIndex(firstParPlayer2).concat(", ").concat(getValueCardByIndex(secondParPlayer2));
-			return new Ganador(winnerCards, TipoMano.DOBLE_PAR);
+			return getWinnerWith2Cards(firstParPlayer2, secondParPlayer2, TipoMano.DOBLE_PAR);
 		}
 		
 		return null;
+	}
+	
+	private Ganador getWinnerWith2Cards(int cardIndex1, int intCardIndex2, TipoMano tipoDeMano) {
+		final String winnerCards = getValueCardByIndex(cardIndex1).concat(", ").concat(getValueCardByIndex(intCardIndex2));
+		return new Ganador(winnerCards, tipoDeMano);
 	}
 		
 	private Ganador validateTerna (Mano handPlayer1, Mano handPlayer2) {
