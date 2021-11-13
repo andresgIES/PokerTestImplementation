@@ -21,6 +21,10 @@ public class Poker {
 	private static final int TERNA = 3;
 	private static final int POKER = 4;
 	private static final int INDICE_CARTA_10 = 8;
+	private static final int INDICE_CARTA_0 = 0;
+	
+	private static final String NAME_JUGADOR_BLACK = "Negro";
+	private static final String NAME_JUGADOR_WHITE = "Blanco";
 	
 	public Ganador getValidationByMayorHand(Mano handPlayer1, Mano handPlayer2) throws ExceptionValidationPoker {
 				
@@ -98,10 +102,10 @@ public class Poker {
 		final int valueHighCardPlayer2 = getValueHighCard(handPlayer2.getCartas());
 		
 		if(valueHighCardPlayer1 > valueHighCardPlayer2) {
-			return new Ganador(getValueCardByIndex(valueHighCardPlayer1), TipoMano.CARTA_ALTA);
+			return new Ganador(getValueCardByIndex(valueHighCardPlayer1), handPlayer1, NAME_JUGADOR_WHITE);
 		}
 		if(valueHighCardPlayer2 > valueHighCardPlayer1) {
-			return new Ganador(getValueCardByIndex(valueHighCardPlayer2), TipoMano.CARTA_ALTA);
+			return new Ganador(getValueCardByIndex(valueHighCardPlayer2), handPlayer2, NAME_JUGADOR_BLACK);
 		}
 		if(valueHighCardPlayer2 == valueHighCardPlayer1) {
 			// TODO implementar desempate de acuerdo a las demas cartas
@@ -116,10 +120,10 @@ public class Poker {
 		final int valueParPlayer2 = getValueCardPar(handPlayer2.getCartas());
 				
 		if((valueParPlayer1 > valueParPlayer2) && isNotIndexNotFound(valueParPlayer1)) {
-			return new Ganador(getValueCardByIndex(valueParPlayer1), TipoMano.PAR);
+			return new Ganador(getValueCardByIndex(valueParPlayer1), handPlayer1, NAME_JUGADOR_WHITE);
 		}
 		if((valueParPlayer1 < valueParPlayer2) && isNotIndexNotFound(valueParPlayer2)) {
-			return new Ganador(getValueCardByIndex(valueParPlayer2), TipoMano.PAR);
+			return new Ganador(getValueCardByIndex(valueParPlayer2), handPlayer2, NAME_JUGADOR_BLACK);
 		}
 		if(valueParPlayer1 == valueParPlayer2) {
 			return validateHighCard(handPlayer1, handPlayer2);
@@ -158,34 +162,30 @@ public class Poker {
 			final int secondDoblePairPlayer2 = (firstParPlayer2 == bestDoblePairPlayer2) ? secondParPlayer2 : firstParPlayer2;
 
 			if ((secondDoblePairPlayer1 > secondDoblePairPlayer2) && validateBothIndex(secondDoblePairPlayer1, secondDoblePairPlayer2)) {
-				return getWinnerWith2Cards(firstParPlayer1, secondParPlayer1, TipoMano.DOBLE_PAR);
+				return Ganador.getWinnerWith2Cards(getValueCardByIndex(firstParPlayer1), getValueCardByIndex(secondParPlayer1), handPlayer1, NAME_JUGADOR_WHITE);
 			}
 			
 			if ((secondDoblePairPlayer2 > secondDoblePairPlayer1) && validateBothIndex(secondDoblePairPlayer1, secondDoblePairPlayer2)) {
-				return getWinnerWith2Cards(firstParPlayer2, secondParPlayer2, TipoMano.DOBLE_PAR);
+				return Ganador.getWinnerWith2Cards(getValueCardByIndex(firstParPlayer2), getValueCardByIndex(secondParPlayer2), handPlayer2, NAME_JUGADOR_BLACK);
 			}
 			
 			if (secondDoblePairPlayer1 == secondDoblePairPlayer2 && validateBothIndex(secondDoblePairPlayer1, secondDoblePairPlayer2)) {
-				
+				// TODO desempate de doble par
 			}
 			
 		}
 
 		if ((bestDoblePairPlayer1 > bestDoblePairPlayer2) && validateBothIndex(firstParPlayer1, secondParPlayer1)) {
-			return getWinnerWith2Cards(firstParPlayer1, secondParPlayer1, TipoMano.DOBLE_PAR);
+			return Ganador.getWinnerWith2Cards(getValueCardByIndex(firstParPlayer1),getValueCardByIndex(secondParPlayer1), handPlayer1, NAME_JUGADOR_WHITE);
 		}
 		
 		if (bestDoblePairPlayer1 < bestDoblePairPlayer2 && validateBothIndex(firstParPlayer2, secondParPlayer2)) {
-			return getWinnerWith2Cards(firstParPlayer2, secondParPlayer2, TipoMano.DOBLE_PAR);
+			return Ganador.getWinnerWith2Cards(getValueCardByIndex(firstParPlayer2), getValueCardByIndex(secondParPlayer2), handPlayer2, NAME_JUGADOR_BLACK);
 		}
 		
 		return null;
 	}
 	
-	private Ganador getWinnerWith2Cards(int cardIndex1, int intCardIndex2, TipoMano tipoDeMano) {
-		final String winnerCards = getValueCardByIndex(cardIndex1).concat(", ").concat(getValueCardByIndex(intCardIndex2));
-		return new Ganador(winnerCards, tipoDeMano);
-	}
 		
 	private Ganador validateTerna (Mano handPlayer1, Mano handPlayer2) {
 		
@@ -193,10 +193,10 @@ public class Poker {
 		final int valueTernaCardPlayer2 = getValueTerna(handPlayer2.getCartas());
 		
 		if (valueTernaCardPlayer1 > valueTernaCardPlayer2) {
-			return new Ganador(getValueCardByIndex(valueTernaCardPlayer1), TipoMano.TERNA);
+			return new Ganador(getValueCardByIndex(valueTernaCardPlayer1), handPlayer1, NAME_JUGADOR_WHITE);
 		}
 		if (valueTernaCardPlayer1 < valueTernaCardPlayer2) {
-			return new Ganador(getValueCardByIndex(valueTernaCardPlayer2), TipoMano.TERNA);
+			return new Ganador(getValueCardByIndex(valueTernaCardPlayer2), handPlayer2, NAME_JUGADOR_BLACK);
 		}
 		if(valueTernaCardPlayer1 == valueTernaCardPlayer2) {
 			// TODO validacion desempate de la terna
@@ -211,10 +211,10 @@ public class Poker {
 		final int beginStairPlayer2 = getCorrectStair(handPlayer2.getCartas());
 		
 		if(beginStairPlayer1 > beginStairPlayer2) {
-			return new Ganador(getValueCardByIndex(beginStairPlayer1), TipoMano.ESCALERA);
+			return new Ganador(getValueCardByIndex(beginStairPlayer1), handPlayer1, NAME_JUGADOR_WHITE);
 		}
 		if(beginStairPlayer1 < beginStairPlayer2) {
-			return new Ganador(getValueCardByIndex(beginStairPlayer2), TipoMano.ESCALERA);
+			return new Ganador(getValueCardByIndex(beginStairPlayer2), handPlayer2, NAME_JUGADOR_BLACK);
 		}
 		if(beginStairPlayer1 == beginStairPlayer2) {
 			// TODO implementar desempate escalera
@@ -235,10 +235,10 @@ public class Poker {
 		}	
 
 		if(sameColorPlayer1) {
-			return new Ganador(colorGanador + (handPlayer1.getCartas().get(0).getPalo().getNombre()), TipoMano.COLOR);
+			return new Ganador(colorGanador + (handPlayer1.getCartaByIndex(INDICE_CARTA_0).getNamePalo()), handPlayer1, NAME_JUGADOR_WHITE);
 		}
 		if(sameColorPlayer2) {
-			return new Ganador(colorGanador + (handPlayer2.getCartas().get(0).getPalo().getNombre()), TipoMano.COLOR);		}
+			return new Ganador(colorGanador + (handPlayer2.getCartaByIndex(INDICE_CARTA_0).getNamePalo()), handPlayer2, NAME_JUGADOR_BLACK);		}
 	
 		return null;
 	}
@@ -256,11 +256,11 @@ public class Poker {
 
 		if(valueTernaPlayer1 > valueTernaPlayer2 && validateBothIndex(valueTernaPlayer1, parPlayer1)) {
 			final String parAndTernaPlayer1 = getValueCardByIndex(valueTernaPlayer1).concat(", ").concat(getValueCardByIndex(parPlayer1));
-			return new Ganador(parAndTernaPlayer1, TipoMano.FULL_HOUSE);
+			return new Ganador(parAndTernaPlayer1, handPlayer1, NAME_JUGADOR_WHITE);
 		}
 		if(valueTernaPlayer1 < valueTernaPlayer2 && validateBothIndex(valueTernaPlayer2, parPlayer2)) {
 			final String parAndTernaPlayer2 = getValueCardByIndex(valueTernaPlayer2).concat(", ").concat(getValueCardByIndex(parPlayer2));
-			return new Ganador(parAndTernaPlayer2, TipoMano.FULL_HOUSE);
+			return new Ganador(parAndTernaPlayer2, handPlayer2, NAME_JUGADOR_BLACK);
 		}
 		if(valueTernaPlayer1 == valueTernaPlayer2 && validateBothIndex(valueTernaPlayer1, valueTernaPlayer2)
 				&& validateBothIndex(parPlayer1, parPlayer2)) {
@@ -276,10 +276,10 @@ public class Poker {
 		final int valueCardPokerPlayer2 = getValuePoker(handPlayer2.getCartas());
 		
 		if (valueCardPokerPlayer1 > valueCardPokerPlayer2) {
-			return new Ganador(getValueCardByIndex(valueCardPokerPlayer1), TipoMano.POKER);
+			return new Ganador(getValueCardByIndex(valueCardPokerPlayer1), handPlayer1, NAME_JUGADOR_WHITE);
 		}
 		if (valueCardPokerPlayer1 < valueCardPokerPlayer2) {
-			return new Ganador(getValueCardByIndex(valueCardPokerPlayer2), TipoMano.POKER);
+			return new Ganador(getValueCardByIndex(valueCardPokerPlayer2), handPlayer2, NAME_JUGADOR_BLACK);
 		}
 		if(valueCardPokerPlayer1 == valueCardPokerPlayer2) {
 			// TODO validacion desempate del poker
@@ -299,10 +299,10 @@ public class Poker {
 		String colorGanador = "Gana la escalera de: ";
 		
 		if ((beginStairPlayer1 > beginStairPlayer2) && sameColorPlayer1) {
-			return new Ganador(colorGanador + (handPlayer1.getCartas().get(0).getPalo().getNombre()), TipoMano.ESCALERA_COLOR);
+			return new Ganador(colorGanador + (handPlayer1.getCartas().get(0).getPalo().getNombre()), handPlayer1, NAME_JUGADOR_WHITE);
 		}
 		if ((beginStairPlayer1 < beginStairPlayer2) && sameColorPlayer2) {
-			return new Ganador(colorGanador + (handPlayer2.getCartas().get(0).getPalo().getNombre()), TipoMano.ESCALERA_COLOR);
+			return new Ganador(colorGanador + (handPlayer2.getCartas().get(0).getPalo().getNombre()), handPlayer2, NAME_JUGADOR_WHITE);
 		}
 		if((beginStairPlayer1 == beginStairPlayer2) && (sameColorPlayer1 && sameColorPlayer2)) {
 			// TODO validacion desempate de la escalera de color
@@ -328,10 +328,10 @@ public class Poker {
 			// TODO validacion desempate de la escalera de real
 		}
 		if (sameColorPlayer1 && isFirstPositionTenPlayer1) {
-			return new Ganador(colorGanador + (handPlayer1.getCartas().get(0).getPalo().getNombre()), TipoMano.ESCALERA_REAL);
+			return new Ganador(colorGanador + handPlayer1.getCartaByIndex(INDICE_CARTA_0).getNamePalo(), handPlayer1, NAME_JUGADOR_WHITE);
 		}
 		if (sameColorPlayer2 && isFirstPositionTenPlayer2) {
-			return new Ganador(colorGanador + (handPlayer2.getCartas().get(0).getPalo().getNombre()), TipoMano.ESCALERA_REAL);
+			return new Ganador(colorGanador + handPlayer2.getCartaByIndex(INDICE_CARTA_0).getNamePalo(), handPlayer2, NAME_JUGADOR_BLACK);
 		}
 
 		return null;

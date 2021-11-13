@@ -1,21 +1,38 @@
 package domain;
 
-import enums.TipoMano;
-
 public class Ganador {
 	
+	private String nombreJugador;
+
+	private Mano mano;
+	
 	private String cartaGanadora;
-	
-	private TipoMano tipoManoGanadora;
-	
+		
 	public Ganador() {
 		super();
 	}
 	
-	public Ganador(String cartaGanadora, TipoMano tipoDeMano) {
+	public Ganador(String cartaGanadora, Mano mano, String nombreJugador) {
 		super();
+		this.nombreJugador = nombreJugador;
+		this.mano = mano;
 		this.cartaGanadora = cartaGanadora;
-		this.tipoManoGanadora = tipoDeMano;
+	}
+
+	public String getNombreJugador() {
+		return nombreJugador;
+	}
+
+	public void setNombreJugador(String nombreJugador) {
+		this.nombreJugador = nombreJugador;
+	}
+
+	public Mano getMano() {
+		return mano;
+	}
+
+	public void setMano(Mano mano) {
+		this.mano = mano;
 	}
 
 	public String getCartaGanadora() {
@@ -26,17 +43,19 @@ public class Ganador {
 		this.cartaGanadora = cartaGanadora;
 	}
 
-	public TipoMano getTipoDeMano() {
-		return tipoManoGanadora;
+	public String getMessageWinner() {
+		return "El ganador es el jugador: " + this.nombreJugador + "Con la mano de tipo: " + this.getMano().getTipoDeMano();
 	}
-
-	public void setTipoDeMano(TipoMano tipoManoGanadora) {
-		this.tipoManoGanadora = tipoManoGanadora;
+	
+	public static Ganador getWinnerWith2Cards(String card1, String card2, Mano mano, String jugador) {
+		final String winnerCards = card1.concat(", ").concat(card2);
+		return new Ganador(winnerCards, mano, jugador);
 	}
 
 	@Override
 	public String toString() {
-		return "Ganador [cartaGanadora=" + cartaGanadora + ", tipoManoGanadora=" + tipoManoGanadora + "]";
+		return "Ganador [nombreJugador=" + nombreJugador + ", mano=" + mano + ", cartaGanadora=" + cartaGanadora + "]";
 	}
+
 	
 }

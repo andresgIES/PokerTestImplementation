@@ -32,6 +32,10 @@ public class Carta {
 	public void setValor(String valor) {
 		this.valor = valor;
 	}
+	
+	public String getNamePalo() {
+		return this.palo.getNombre();
+	}
 
 	@Override
 	public String toString() {

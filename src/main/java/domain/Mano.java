@@ -50,6 +50,10 @@ public class Mano {
 	public int getValorMano() {
 		return this.getTipoDeMano().getValor();
 	}	
+	
+	public Carta getCartaByIndex(int indexCard) {
+		return this.getCartas().get(indexCard);
+	}
 
 	@Override
 	public String toString() {
