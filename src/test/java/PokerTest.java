@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import domain.Ganador;
 import domain.Mano;
 import domain.Poker;
+import enums.TipoMano;
 import exceptions.ExceptionValidationPoker;
 
 class PokerTest {
@@ -38,10 +39,11 @@ class PokerTest {
     	final Ganador actualCardWinner = juego.getValidationByMayorHand(handPlayerWhite, handPlayerBlack);
     	
     	// then
-    	assertEquals(VALOR_A, actualCardWinner.getCartaGanadora());
+    	final String messageExpected = "El ganador es el jugador: "+actualCardWinner.getNombreJugador()+" Con la mano de tipo: "+TipoMano.CARTA_ALTA;
+    	assertEquals(messageExpected, actualCardWinner.getMessageWinner());
     }
 
-    @DisplayName("Blanco: 2H 3D 5S 9C KD  Negro: 2C 3H 4S 8C 2C Blanco gana. - con la carta alta: Rey ")
+    @DisplayName("Blanco: 2H 3D 5S 9C KD  Negro: 2C 3H 4S 8C 2C Blanco gana. - con par de : 2 ")
     @Test
     void testCartaAlta2() throws ExceptionValidationPoker {    	
     	
@@ -54,7 +56,8 @@ class PokerTest {
     	final Ganador actualCardWinner = juego.getValidationByMayorHand(handPlayerWhite, handPlayerBlack);
     	
     	// then
-    	assertEquals(VALOR_2, actualCardWinner.getCartaGanadora());
+    	final String messageExpected = "El ganador es el jugador: "+actualCardWinner.getNombreJugador()+" Con la mano de tipo: "+TipoMano.PAR;
+    	assertEquals(messageExpected, actualCardWinner.getMessageWinner());
     }
     
     @DisplayName("Blanco: 2H 3D 5S 8C  Negro: 2C 3H 4S AC AH Se lanza Exception de error en la mano")
@@ -93,7 +96,8 @@ class PokerTest {
     	final Ganador actualCardWinner = juego.getValidationByMayorHand(manoJugadorBlanco, handPlayerBlack);
     	
     	// then
-    	assertEquals(VALOR_K, actualCardWinner.getCartaGanadora());
+    	final String messageExpected = "El ganador es el jugador: "+actualCardWinner.getNombreJugador()+" Con la mano de tipo: "+TipoMano.PAR;
+    	assertEquals(messageExpected, actualCardWinner.getMessageWinner());
     	
     }
 
@@ -110,7 +114,8 @@ class PokerTest {
     	final Ganador actualCardWinner = juego.getValidationByMayorHand(handPlayerWhite, handPlayerBlack);
     	
     	// then
-    	assertEquals(VALOR_A, actualCardWinner.getCartaGanadora());
+    	final String messageExpected = "El ganador es el jugador: "+actualCardWinner.getNombreJugador()+" Con la mano de tipo: "+TipoMano.PAR;
+    	assertEquals(messageExpected, actualCardWinner.getMessageWinner());
 
     }
     
@@ -148,7 +153,8 @@ class PokerTest {
     	final Ganador actualCardWinner = juego.getValidationByMayorHand(handPlayerWhite, handPlayerBlack);
     	
     	// then
-    	assertEquals(VALOR_A, actualCardWinner.getCartaGanadora());
+    	final String messageExpected = "El ganador es el jugador: "+actualCardWinner.getNombreJugador()+" Con la mano de tipo: "+TipoMano.PAR;
+    	assertEquals(messageExpected, actualCardWinner.getMessageWinner());
 
     }
 
@@ -218,10 +224,11 @@ class PokerTest {
     	final Mano handPlayerBlack = new Mano("2C 3H 4S 8C AH");
 
     	// when
-    	final Ganador actualCardsWinner = juego.getValidationByMayorHand(handPlayerWhite, handPlayerBlack);
+    	final Ganador actualCardWinner = juego.getValidationByMayorHand(handPlayerWhite, handPlayerBlack);
     	
     	// then 
-    	assertEquals(VALOR_K, actualCardsWinner.getCartaGanadora());
+    	final String messageExpected = "El ganador es el jugador: "+actualCardWinner.getNombreJugador()+" Con la mano de tipo: "+TipoMano.TERNA;
+    	assertEquals(messageExpected, actualCardWinner.getMessageWinner());
     }
 
     @DisplayName("Blanco: 2H 3D 5S 8C KD  Negro: 2C 3H AS AC AH Negro gana. - con Terna: As ")
@@ -234,10 +241,11 @@ class PokerTest {
     	final Mano handPlayerBlack = new Mano("2C 3H AS AC AH");
 
     	// when
-    	final Ganador actualCardsWinner = juego.getValidationByMayorHand(handPlayerWhite, handPlayerBlack);
+    	final Ganador actualCardWinner = juego.getValidationByMayorHand(handPlayerWhite, handPlayerBlack);
     	
     	// then 
-    	assertEquals(VALOR_A, actualCardsWinner.getCartaGanadora());
+    	final String messageExpected = "El ganador es el jugador: "+actualCardWinner.getNombreJugador()+" Con la mano de tipo: "+TipoMano.TERNA;
+    	assertEquals(messageExpected, actualCardWinner.getMessageWinner());
     }
 
 
@@ -252,10 +260,11 @@ class PokerTest {
     	final Mano handPlayerBlack = new Mano("2C 3H 4S 8C AH");
 
     	// when
-    	final Ganador actualCardsWinner = juego.getValidationByMayorHand(handPlayerWhite, handPlayerBlack);
+    	final Ganador actualCardWinner = juego.getValidationByMayorHand(handPlayerWhite, handPlayerBlack);
     	
     	// then 
-    	assertEquals(VALOR_2, actualCardsWinner.getCartaGanadora());
+    	final String messageExpected = "El ganador es el jugador: "+actualCardWinner.getNombreJugador()+" Con la mano de tipo: "+TipoMano.ESCALERA;
+    	assertEquals(messageExpected, actualCardWinner.getMessageWinner());
  
     }
 
@@ -269,10 +278,11 @@ class PokerTest {
     	final Mano handPlayerBlack = new Mano("2C 3H 4S 5C 6H");
 
     	// when
-    	final Ganador actualCardsWinner = juego.getValidationByMayorHand(handPlayerWhite, handPlayerBlack);
+    	final Ganador actualCardWinner = juego.getValidationByMayorHand(handPlayerWhite, handPlayerBlack);
     	
     	// then 
-    	assertEquals(VALOR_2, actualCardsWinner.getCartaGanadora());
+    	final String messageExpected = "El ganador es el jugador: "+actualCardWinner.getNombreJugador()+" Con la mano de tipo: "+TipoMano.ESCALERA;
+    	assertEquals(messageExpected, actualCardWinner.getMessageWinner());
     }
 
 
@@ -358,10 +368,11 @@ class PokerTest {
     	final Mano handPlayerBlack = new Mano("2C 3H 4S 8C AH");
 
     	// when
-    	final Ganador actualCardsWinner = juego.getValidationByMayorHand(handPlayerWhite, handPlayerBlack);
+    	final Ganador actualCardWinner = juego.getValidationByMayorHand(handPlayerWhite, handPlayerBlack);
     	
     	// then 
-    	assertEquals(VALOR_2, actualCardsWinner.getCartaGanadora());
+    	final String messageExpected = "El ganador es el jugador: "+actualCardWinner.getNombreJugador()+" Con la mano de tipo: "+TipoMano.POKER;
+    	assertEquals(messageExpected, actualCardWinner.getMessageWinner());
     }
 
     @DisplayName("Blanco: 2H 3D 5S 8C KD  Negro: 2C 2H 2S 2D KH Negro gana. - con poker: 2 ")
@@ -374,10 +385,11 @@ class PokerTest {
     	final Mano handPlayerBlack = new Mano("2C 2H 2S 2D KH");
 
     	// when
-    	final Ganador actualCardsWinner = juego.getValidationByMayorHand(handPlayerWhite, handPlayerBlack);
+    	final Ganador actualCardWinner = juego.getValidationByMayorHand(handPlayerWhite, handPlayerBlack);
     	
     	// then 
-    	assertEquals(VALOR_2, actualCardsWinner.getCartaGanadora());
+    	final String messageExpected = "El ganador es el jugador: "+actualCardWinner.getNombreJugador()+" Con la mano de tipo: "+TipoMano.POKER;
+    	assertEquals(messageExpected, actualCardWinner.getMessageWinner());
     }
 
 

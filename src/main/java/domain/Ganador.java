@@ -44,7 +44,7 @@ public class Ganador {
 	}
 
 	public String getMessageWinner() {
-		return "El ganador es el jugador: " + this.nombreJugador + "Con la mano de tipo: " + this.getMano().getTipoDeMano();
+		return "El ganador es el jugador: " + this.nombreJugador + " Con la mano de tipo: " + this.getMano().getTipoDeMano();
 	}
 	
 	public static Ganador getWinnerWith2Cards(String card1, String card2, Mano mano, String jugador) {
