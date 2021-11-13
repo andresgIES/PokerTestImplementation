@@ -1,11 +1,14 @@
 package domain;
 
+import static constants.Constants.CARTAS;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import enums.TipoMano;
 
 public class Mano {
-	
+		
 	private List<Carta> cartas;
 	
 	private TipoMano tipoDeMano;
@@ -13,10 +16,19 @@ public class Mano {
 	public Mano() {
 		super();
 	}
-
-	public Mano(List<Carta> cartas, TipoMano tipoDeMano) {
-		this.cartas = cartas;
-		this.tipoDeMano = tipoDeMano;
+	
+	public Mano (String cartas) {
+	    	
+	    	List<Carta> listOfCartas = new ArrayList<>();
+	    	
+	        String data = cartas.trim();
+	        String[] split = data.split(" ");
+	        
+	        for (String keyCard : split) {
+				listOfCartas.add(CARTAS.get(keyCard));
+			}
+	           	
+	    	this.cartas = listOfCartas;
 	}
 
 	public List<Carta> getCartas() {
@@ -37,7 +49,7 @@ public class Mano {
 	
 	public int getValorMano() {
 		return this.getTipoDeMano().getValor();
-	}
+	}	
 
 	@Override
 	public String toString() {
