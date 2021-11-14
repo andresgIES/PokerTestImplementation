@@ -46,7 +46,7 @@ class PokerTest {
     @Test
     void testCartaAlta2() throws ExceptionValidationPoker {    	
     	
-    	// given
+    	// given	
     	final Jugador handPlayerWhite = new Jugador(NAME_JUGADOR_WHITE, new Mano("2H 3D 5S 9C KD"));
     	    	
     	final Jugador handPlayerBlack = new Jugador(NAME_JUGADOR_BLACK, new Mano("2C 3H 4S 8C 2C"));
@@ -173,8 +173,7 @@ class PokerTest {
     	
     	// then 
     	final String messageExpected = buildMessageExpected(NAME_JUGADOR_WHITE, TipoMano.DOBLE_PAR);
-    	assertEquals(messageExpected, actualCardWinner.getMessageWinner());
-    	
+    	assertEquals(messageExpected, actualCardWinner.getMessageWinner());	
     }
 
     @DisplayName("Blanco: 2H 3D 5S 8C KD  Negro: 2C 3H 3S AC AH Negro gana. - con dos pares: As y Tres ")
@@ -247,7 +246,6 @@ class PokerTest {
     	assertEquals(messageExpected, actualCardWinner.getMessageWinner());
     }
 
-
     // escalera
     @DisplayName("Blanco: 2H 3D 4S 5C 6D  Negro: 2C 3H 4S 8C AH Blanco gana. - con Escalera ")
     @Test
@@ -264,7 +262,6 @@ class PokerTest {
     	// then 
     	final String messageExpected = buildMessageExpected(NAME_JUGADOR_WHITE, TipoMano.ESCALERA);
     	assertEquals(messageExpected, actualCardWinner.getMessageWinner());
- 
     }
 
     @DisplayName("Blanco: 2H 3D 5S 8C KD  Negro: 2C 3H 4S 5C 6H Negro gana. - con Escalera ")
@@ -335,8 +332,7 @@ class PokerTest {
     	
     	// then 
     	final String messageExpected = buildMessageExpected(NAME_JUGADOR_WHITE, TipoMano.FULL_HOUSE);
-    	assertEquals(messageExpected, actualCardWinner.getMessageWinner());
-    	
+    	assertEquals(messageExpected, actualCardWinner.getMessageWinner());	
     }
 
     @DisplayName("Blanco: 2H 3D 5S 8C KD  Negro: 2C 2H 2S AC AH Negro gana. - con full house ")
@@ -407,8 +403,7 @@ class PokerTest {
     	
     	// then   
     	final String messageExpected = buildMessageExpected(NAME_JUGADOR_WHITE, TipoMano.ESCALERA_COLOR);
-    	assertEquals(messageExpected, actualCardWinner.getMessageWinner());
-    	
+    	assertEquals(messageExpected, actualCardWinner.getMessageWinner());	
     }
 
     @DisplayName("Blanco: 2H 3D 5S 8C KD  Negro: 2C 3C 4C 5C 6C Negro gana. - con Escalera Color: Trebol")
@@ -425,8 +420,7 @@ class PokerTest {
     	
     	// then 
     	final String messageExpected = buildMessageExpected(NAME_JUGADOR_BLACK, TipoMano.ESCALERA_COLOR);
-    	assertEquals(messageExpected, actualCardWinner.getMessageWinner()); 
-    	
+    	assertEquals(messageExpected, actualCardWinner.getMessageWinner()); 	
     }
 
 
@@ -464,7 +458,144 @@ class PokerTest {
     	final String messageExpected = buildMessageExpected(NAME_JUGADOR_BLACK, TipoMano.ESCALERA_REAL);
     	assertEquals(messageExpected, actualCardWinner.getMessageWinner());
     }
+    
+    @DisplayName("Blanco: 2C 3C 4C 5C 6C  Negro: 10C JC QC KC AC Negro gana. - con Escalera Real: Trebol")
+    @Test
+    void testEscaleraRealVsEscalerColor() throws ExceptionValidationPoker {    	
     	
+    	// given	
+    	final Jugador handPlayerWhite = new Jugador(NAME_JUGADOR_WHITE, new Mano("2C 3C 4C 5C 6C"));
+    	
+    	final Jugador handPlayerBlack = new Jugador(NAME_JUGADOR_BLACK, new Mano("10C JC QC KC AC"));
+
+    	// when
+    	final Ganador actualCardWinner = juego.getValidationByBestHand(handPlayerWhite, handPlayerBlack);
+    	
+    	// then 
+    	final String messageExpected = buildMessageExpected(NAME_JUGADOR_BLACK, TipoMano.ESCALERA_REAL);
+    	assertEquals(messageExpected, actualCardWinner.getMessageWinner());
+    }
+    
+    @DisplayName("Blanco: 2C 3C 4C 5C 6C Negro: 2C 2H 2S 2D KH Blanco gana. - con Escalera de Color: Trebol")
+    @Test
+    void testEscalerColorVsPoker() throws ExceptionValidationPoker {    	
+    	
+    	// given	
+    	final Jugador handPlayerWhite = new Jugador(NAME_JUGADOR_WHITE, new Mano("2C 3C 4C 5C 6C"));
+    	
+    	final Jugador handPlayerBlack = new Jugador(NAME_JUGADOR_BLACK, new Mano("2C 2H 2S 2D KH"));
+
+    	// when
+    	final Ganador actualCardWinner = juego.getValidationByBestHand(handPlayerWhite, handPlayerBlack);
+    	
+    	// then 
+    	final String messageExpected = buildMessageExpected(NAME_JUGADOR_WHITE, TipoMano.ESCALERA_COLOR);
+    	assertEquals(messageExpected, actualCardWinner.getMessageWinner());
+    }
+    
+    @DisplayName("Blanco: 2H 2D KS KC KD  Negro: 2C 2H 2S 2D KH Negro gana. - con poker: 2 ")
+    @Test
+    void testPokerVsFullHouse() throws ExceptionValidationPoker {  
+    	
+    	// given	
+    	final Jugador handPlayerWhite = new Jugador(NAME_JUGADOR_WHITE, new Mano("2H 2D KS KC KD"));
+    	
+    	final Jugador handPlayerBlack = new Jugador(NAME_JUGADOR_BLACK, new Mano("2C 2H 2S 2D KH"));
+
+    	// when
+    	final Ganador actualCardWinner = juego.getValidationByBestHand(handPlayerWhite, handPlayerBlack);
+    	
+    	// then 
+    	final String messageExpected = buildMessageExpected(NAME_JUGADOR_BLACK, TipoMano.POKER);
+    	assertEquals(messageExpected, actualCardWinner.getMessageWinner());
+    }
+    
+    // full house
+    @DisplayName("Blanco: 2H 2D KS KC KD  Negro: 2H 3H 5H KH 8H Blanco gana. - con full house ")
+    @Test
+    void testFullHouseVsColor() throws ExceptionValidationPoker {
+    	
+    	// given
+    	final Jugador handPlayerWhite = new Jugador(NAME_JUGADOR_WHITE, new Mano("2H 2D KS KC KD"));
+    	
+    	final Jugador handPlayerBlack = new Jugador(NAME_JUGADOR_BLACK, new Mano("2H 3H 5H KH 8H"));
+
+    	// when
+    	final Ganador actualCardWinner = juego.getValidationByBestHand(handPlayerWhite, handPlayerBlack);
+    	
+    	// then 
+    	final String messageExpected = buildMessageExpected(NAME_JUGADOR_WHITE, TipoMano.FULL_HOUSE);
+    	assertEquals(messageExpected, actualCardWinner.getMessageWinner());	
+    }
+    
+    @DisplayName("Blanco: 2H 3D 4S 5C 6D  Negro: 2C 3C 4C AC QC Negro gana. - con color ")
+    @Test
+    void testColorVsEscalera() throws ExceptionValidationPoker {
+    	
+    	// given	
+    	final Jugador handPlayerWhite = new Jugador(NAME_JUGADOR_WHITE, new Mano("2H 3D 4S 5C 6D"));
+    	
+    	final Jugador handPlayerBlack = new Jugador(NAME_JUGADOR_BLACK, new Mano("2C 3C 4C AC QC"));
+
+    	// when
+    	final Ganador actualCardWinner = juego.getValidationByBestHand(handPlayerWhite, handPlayerBlack);
+    	
+    	// then 
+    	final String messageExpected = buildMessageExpected(NAME_JUGADOR_BLACK, TipoMano.COLOR);
+    	assertEquals(messageExpected, actualCardWinner.getMessageWinner());
+    }
+    
+    @DisplayName("Blanco: 2H 3D 4S 5C 6D  Negro: 2H 3D KS KC KD Blanco gana. - con Escalera ")
+    @Test
+    void testEscaleraVsTerna() throws ExceptionValidationPoker {    	
+    	
+    	// given
+    	final Jugador handPlayerWhite = new Jugador(NAME_JUGADOR_WHITE, new Mano("2H 3D 4S 5C 6D"));
+    	
+    	final Jugador handPlayerBlack = new Jugador(NAME_JUGADOR_BLACK, new Mano("2H 3D KS KC KD"));
+
+    	// when
+    	final Ganador actualCardWinner = juego.getValidationByBestHand(handPlayerWhite, handPlayerBlack);
+    	
+    	// then 
+    	final String messageExpected = buildMessageExpected(NAME_JUGADOR_WHITE, TipoMano.ESCALERA);
+    	assertEquals(messageExpected, actualCardWinner.getMessageWinner());
+    }
+    
+    @DisplayName("Blanco: 2H 3D 3S KC KD  Negro: 2C 3H AS AC AH Negro gana. - con Terna: As ")
+    @Test
+    void testTernaVsDoblePar() throws ExceptionValidationPoker {
+    	
+    	// given
+    	final Jugador handPlayerWhite = new Jugador(NAME_JUGADOR_WHITE, new Mano("2H 3D 3S KC KD"));
+    	
+    	final Jugador handPlayerBlack = new Jugador(NAME_JUGADOR_BLACK, new Mano("2C 3H AS AC AH"));
+
+    	// when
+    	final Ganador actualCardWinner = juego.getValidationByBestHand(handPlayerWhite, handPlayerBlack);
+    	
+    	// then 
+    	final String messageExpected = buildMessageExpected(NAME_JUGADOR_BLACK, TipoMano.TERNA);
+    	assertEquals(messageExpected, actualCardWinner.getMessageWinner());
+    }
+    
+    @DisplayName("Blanco: 2H 3D 3S KC KD  Negro: 2C 3H 4S 4C AH Blanco gana. - con dos pares: Rey y Tres")
+    @Test
+    void testDosParesVsPar() throws ExceptionValidationPoker {	
+    	
+    	// given
+    	final Jugador handPlayerWhite = new Jugador(NAME_JUGADOR_WHITE, new Mano("2H 3D 3S KC KD"));
+    	    	
+    	final Jugador handPlayerBlack = new Jugador(NAME_JUGADOR_BLACK, new Mano("2C 3H 4S 4C AH"));
+
+    	// when
+    	final Ganador actualCardWinner = juego.getValidationByBestHand(handPlayerWhite, handPlayerBlack);
+    	
+    	// then 
+    	final String messageExpected = buildMessageExpected(NAME_JUGADOR_WHITE, TipoMano.DOBLE_PAR);
+    	assertEquals(messageExpected, actualCardWinner.getMessageWinner());	
+    }
+    
     private String buildMessageExpected (String namePlayer, TipoMano manoGanadora) {
     	return "El ganador es el jugador: "+namePlayer+" Con la mano de tipo: "+manoGanadora;
     }

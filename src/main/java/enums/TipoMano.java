@@ -19,10 +19,6 @@ public enum TipoMano {
 		this.valor = valor;
 	}
 
-	private TipoMano() {
-		this.valor = 0;
-	}
-
 	public int getValor() {
 		return valor;
 	}
