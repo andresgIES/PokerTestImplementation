@@ -3,41 +3,30 @@ package domain;
 import enums.TipoMano;
 
 public class Ganador {
-	
-	private String nombreJugador;
 
-	private Mano mano;
-	
+	private Jugador jugador;
+
 	private String cartaGanadora;
-	
+
 	private TipoMano manoGanadora;
-		
+
 	public Ganador() {
 		super();
 	}
-	
-	public Ganador(String cartaGanadora, Mano mano, String nombreJugador, TipoMano manoGanadora) {
+
+	public Ganador(String cartaGanadora, Jugador jugador, TipoMano manoGanadora) {
 		super();
-		this.nombreJugador = nombreJugador;
-		this.mano = mano;
+		this.jugador = jugador;
 		this.cartaGanadora = cartaGanadora;
 		this.manoGanadora = manoGanadora;
 	}
 
-	public String getNombreJugador() {
-		return nombreJugador;
+	public Jugador getJugador() {
+		return jugador;
 	}
 
-	public void setNombreJugador(String nombreJugador) {
-		this.nombreJugador = nombreJugador;
-	}
-
-	public Mano getMano() {
-		return mano;
-	}
-
-	public void setMano(Mano mano) {
-		this.mano = mano;
+	public void setJugador(Jugador jugador) {
+		this.jugador = jugador;
 	}
 
 	public String getCartaGanadora() {
@@ -47,7 +36,7 @@ public class Ganador {
 	public void setCartaGanadora(String cartaGanadora) {
 		this.cartaGanadora = cartaGanadora;
 	}
-	
+
 	public TipoMano getManoGanadora() {
 		return manoGanadora;
 	}
@@ -57,18 +46,17 @@ public class Ganador {
 	}
 
 	public String getMessageWinner() {
-		return "El ganador es el jugador: " + this.nombreJugador + " Con la mano de tipo: " + this.getManoGanadora();
+		return "El ganador es el jugador: " + this.jugador.getNombre() + " Con la mano de tipo: " + this.getManoGanadora();
 	}
-	
-	public static Ganador getWinnerWith2Cards(String card1, String card2, Mano mano, String jugador, TipoMano manoGanadora) {
+
+	public static Ganador getWinnerWith2Cards(String card1, String card2, Jugador jugador, TipoMano manoGanadora) {
 		final String winnerCards = card1.concat(", ").concat(card2);
-		return new Ganador(winnerCards, mano, jugador, manoGanadora);
+		return new Ganador(winnerCards, jugador, 	manoGanadora);
 	}
 
 	@Override
 	public String toString() {
-		return "Ganador [nombreJugador=" + nombreJugador + ", mano=" + mano + ", cartaGanadora=" + cartaGanadora + "]";
+		return "Ganador [jugador=" + jugador + ", cartaGanadora=" + cartaGanadora + ", manoGanadora=" + manoGanadora + "]";
 	}
-
 	
 }

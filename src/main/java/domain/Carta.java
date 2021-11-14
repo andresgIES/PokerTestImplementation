@@ -4,6 +4,8 @@ import enums.Palo;
 
 public class Carta {
 	
+	private static final int INDICE_CARTA_0 = 0;
+	
 	private Palo palo;
 	
 	private String valor;
@@ -35,6 +37,10 @@ public class Carta {
 	
 	public String getNamePalo() {
 		return this.palo.getNombre();
+	}
+	
+	public static String getNamePalo(Jugador jugador) {
+		return jugador.getMano().getCartaByIndex(INDICE_CARTA_0).getNamePalo();
 	}
 
 	@Override
