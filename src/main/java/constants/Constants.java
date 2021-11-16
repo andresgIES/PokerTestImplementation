@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import domain.Carta;
 import enums.Palo;
@@ -95,6 +96,21 @@ public final class Constants {
 	
 	public static boolean isNotIndexNotFound (int index) {
 		return INDEX_NOT_FOUND != index;
+	}
+	
+	public static boolean validateTwoIndexDifferentNotFound(int indexOfPosition1, int indexOfPosition2){
+		return INDEX_NOT_FOUND != indexOfPosition1 && INDEX_NOT_FOUND != indexOfPosition2;
+	}
+	
+	public static List<Carta> getNewListWithOutSpecificCard(final List<Carta> playerCards, final int cardToRemove) {
+		if(!isNotIndexNotFound(cardToRemove)) {
+			return playerCards;
+		}
+		else {
+			return playerCards.stream().filter(carta -> 
+			!carta.getValor().equals(getValueCardByIndex(cardToRemove)))
+			.collect(Collectors.toList());
+		}
 	}
 	
 }

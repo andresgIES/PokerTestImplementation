@@ -36,6 +36,10 @@ public class Jugador {
 
 	public List<Carta> getCartasPlayer() {
 		return this.getMano().getCartas();
+	}	
+	
+	public Mano getTypeOfHand() {
+		return this.getMano().getTypeOfHand();
 	}
 
 	@Override
