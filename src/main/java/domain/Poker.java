@@ -121,7 +121,7 @@ public class Poker {
 	}
 		
 	private Ganador validateDoblePar(Jugador player1, Jugador player2) {
-				
+						
 		final int firstParPlayer1 = Mano.getValueCardPar(player1.getCartasPlayer());
 		final List<Carta> cardsPlayer1Filtred = getNewListWithOutSpecificCard(player1.getCartasPlayer(), firstParPlayer1);
 		final int secondParPlayer1 = Mano.getValueCardPar(cardsPlayer1Filtred);
@@ -149,7 +149,13 @@ public class Poker {
 			}
 			
 			if (secondDoblePairPlayer1 == secondDoblePairPlayer2 && validateTwoIndexDifferentNotFound(secondDoblePairPlayer1, secondDoblePairPlayer2)) {
-				// TODO desempate de doble par
+				final List<Carta> cardsPlayer1SecondFilter = getNewListWithOutSpecificCard(cardsPlayer1Filtred, secondParPlayer1);
+				final List<Carta> cardsPlayer2SecondFilter = getNewListWithOutSpecificCard(cardsPlayer2Filtred, secondParPlayer2);
+
+				player1.getMano().setCartas(cardsPlayer1SecondFilter);
+				player2.getMano().setCartas(cardsPlayer2SecondFilter);
+				
+				return validateHighCard(player1, player2);
 			}
 			
 		}
