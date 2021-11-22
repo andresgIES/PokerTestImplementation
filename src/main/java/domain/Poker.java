@@ -186,7 +186,14 @@ public class Poker {
 			return new Ganador(getValueCardByIndex(valueTernaCardPlayer2), player2, TipoMano.TERNA);
 		}
 		if(valueTernaCardPlayer1 == valueTernaCardPlayer2) {
-			// TODO validacion desempate de la terna
+			
+			final List<Carta> cardsPlayer1Filter = getNewListWithOutSpecificCard(player1.getCartasPlayer(), valueTernaCardPlayer1);
+			final List<Carta> cardsPlayer2Filter = getNewListWithOutSpecificCard(player2.getCartasPlayer(), valueTernaCardPlayer2);
+
+			player1.getMano().setCartas(cardsPlayer1Filter);
+			player2.getMano().setCartas(cardsPlayer2Filter);
+			
+			return validateHighCard(player1, player2);
 		}
 		
 		return null;
@@ -216,7 +223,7 @@ public class Poker {
 		final boolean sameColorPlayer2 = Mano.allSameColor(player2.getCartasPlayer());
 								
 		if(sameColorPlayer1 && sameColorPlayer2) {
-			// TODO implementar desempate de color
+			return validateHighCard(player1, player2);
 		}	
 
 		if(sameColorPlayer1) {
@@ -250,7 +257,11 @@ public class Poker {
 		}
 		if(valueTernaPlayer1 == valueTernaPlayer2 && validateTwoIndexDifferentNotFound(valueTernaPlayer1, valueTernaPlayer2)
 				&& validateTwoIndexDifferentNotFound(parPlayer1, parPlayer2)) {
-			// TODO implementar desempate full house
+			
+			player1.getMano().setCartas(cardsPlayer1Filtred);
+			player2.getMano().setCartas(cardsPlayer2Filtred);
+			
+			return validatePar(player1, player2);
 		}
 
 		return null;
@@ -268,7 +279,14 @@ public class Poker {
 			return new Ganador(getValueCardByIndex(valueCardPokerPlayer2), player2, TipoMano.POKER);
 		}
 		if(valueCardPokerPlayer1 == valueCardPokerPlayer2) {
-			// TODO validacion desempate del poker
+			
+			final List<Carta> cardsPlayer1Filter = getNewListWithOutSpecificCard(player1.getCartasPlayer(), valueCardPokerPlayer1);
+			final List<Carta> cardsPlayer2Filter = getNewListWithOutSpecificCard(player2.getCartasPlayer(), valueCardPokerPlayer2);
+
+			player1.getMano().setCartas(cardsPlayer1Filter);
+			player2.getMano().setCartas(cardsPlayer2Filter);
+			
+			return validateHighCard(player1, player2);
 		}
 		
 		return null;

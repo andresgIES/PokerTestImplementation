@@ -51,4 +51,6 @@ Se evaluará:
 - Se da un plus si crea nuevos test
 - Se da un plus si implementa más de las 5 validaciones, pero solo si funcionan todas las que implemente.
 
+### reglas consultadas para los desempates: [pokerstars](https://www.pokerstars.es/poker/games/rules/hand-rankings/)
+
 
